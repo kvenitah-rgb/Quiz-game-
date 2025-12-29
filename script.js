@@ -1,3 +1,5 @@
+console.log("Loading question", currentQuestionIndex);
+  
 const questions = [
   {
     question: "What is the capital of France?",
