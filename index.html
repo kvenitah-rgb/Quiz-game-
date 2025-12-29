@@ -194,7 +194,6 @@
      nextButton.addEventListener('click', () => {
   currentQuestionIndex++;
   if (currentQuestionIndex < shuffledQuestions.length) {
-    startTimer();
     showQuestion();
   } else {
     showFinalResult();
