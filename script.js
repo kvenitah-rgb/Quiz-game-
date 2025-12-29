@@ -95,4 +95,4 @@ function showResult() {
   result.appendChild(endBtn);
 }
 
-showResult();
+startQuiz();
