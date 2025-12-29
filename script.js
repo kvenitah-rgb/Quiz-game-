@@ -50,77 +50,76 @@ const questions = [
 const questionContainer = document.getElementById("question-container");
 const answerButtons = document.getElementById("answer-buttons");
 const nextButton = document.getElementById("next-btn");
-const result = document.getElementById("result");
-
+const resultDisplay = document.getElementById("result");
+let shuffled Questions =[];
 let currentQuestionIndex = 0;
 let score = 0;
 
 function startQuiz() {
+  shuffledQuestion = question.sort(()=>math.random()-0.5);
   currentQuestionIndex = 0;
   score = 0;
   nextButton.style.display = "none";
-  result.innerHTML = "";
   showQuestion();
 }
 
 function showQuestion() {
   resetState();
-  const currentQuestion = questions[currentQuestionIndex];
-  const questionElement = document.createElement("h2");
-  questionElement.innerText = currentQuestion.question;
-  questionContainer.innerHTML = "";
-  questionContainer.appendChild(questionElement);
+  const question=shuffledQuestions[currentQuestionIndex];
+  questionContainer.textContent=question.question;
 
-  currentQuestion.answers.forEach(answer => {
-    const button = document.createElement("li");
-    button.innerText = answer.text;
-    button.classList.add("answer-btn");
-    button.addEventListener("click", () => selectAnswer(button, answer.correct));
-    answerButtons.appendChild(button);
+question.answers.forEach(answer => {
+    const li = document.createElement('li');
+    li.textContent = answer;
+    li.addEventListener('click', () => selectAnswer(li, question.correct));
+    answerButtons.appendChild(li);
   });
 }
 
 function resetState() {
-  nextButton.style.display = "none";
-  answerButtons.innerHTML = "";
-  result.innerHTML = "";
+  nextButton.style.display = 'none';
+  answerButtons.innerHTML = '';
 }
 
-function selectAnswer(button, correct) {
-  if (correct) {
-    score++;
-    button.classList.add("correct");
-  } else {
-    button.classList.add("wrong");
-  }
-  Array.from(answerButtons.children).forEach(btn => {
-    btn.removeEventListener("click", () => {});
-    btn.disabled = true;
+function selectAnswer(selected, correctAnswer) {
+  const options = answerButtons.children;
+  Array.from(options).forEach(option => {
+    option.classList.remove('correct', 'wrong');
+    if (option.textContent === correctAnswer) {
+[12/29, 6:08 AM] Chatgpt: option.classList.add('correct');
+    } else {
+      option.classList.add('wrong');
+    }
+    option.style.pointerEvents = 'none';
   });
-  nextButton.style.display = "inline-block";
+
+  if (selected.textContent === correctAnswer) {
+    score++;
+  }
+
+  clearInterval(timer);
+  nextButton.style.display = 'inline';
 }
 
-nextButton.addEventListener("click", () => {
+nextButton.addEventListener('click', () => {
   currentQuestionIndex++;
-  if (currentQuestionIndex < questions.length) {
+  if (currentQuestionIndex < shuffledQuestions.length) {
+    startTimer();
     showQuestion();
   } else {
-    showResult();
+    showFinalResult();
   }
 });
 
-function showResult() {
-  questionContainer.innerHTML = "";
-  answerButtons.innerHTML = "";
-  nextButton.style.display = "none";
-  result.innerHTML = `
-    <p>Thank you for participating in the quiz!</p>
-    <p>Your score: score /{questions.length}</p>
-    <button id="end-btn">End Quiz</button>
-  `;
-  document.getElementById("end-btn").addEventListener("click", () => {
-    location.reload();
-  });
+function showResult(message) {
+  questionContainer.textContent = '';
+  answerButtons.innerHTML = '';
+  nextButton.style.display = 'none';
+  resultDisplay.textContent = message + ` Your Score: score/{questions.length}`;
+}
+
+function showFinalResult() {
+  showResult("Quiz Completed!");
 }
 
 startQuiz();
