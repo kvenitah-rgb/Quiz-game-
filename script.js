@@ -1,126 +1,87 @@
-const questions = [
-  {
-    question: "What is the capital of France?",
-    answers: [
-      { text: "Paris", correct: true },
-      { text: "London", correct: false },
-      { text: "Berlin", correct: false },
-      { text: "Madrid", correct: false }
-    ]
-  },
-  {
-    question: "Which language runs in a web browser?",
-    answers: [
-      { text: "Java", correct: false },
-      { text: "C", correct: false },
-      { text: "Python", correct: false },
-      { text: "JavaScript", correct: true }
-    ]
-  },
-  {
-    question: "What does CSS stand for?",
-    answers: [
-      { text: "Central Style Sheets", correct: false },
-      { text: "Cascading Style Sheets", correct: true },
-      { text: "Cascading Simple Sheets", correct: false },
-      { text: "Cars SUVs Sailboats", correct: false }
-    ]
-  }
+const quizData = [
+    {
+        question: "What is 2 + 2?",
+        options: ["3", "4", "5", "6"],
+        answer: "4"
+    },
+    {
+        question: "What is the capital of France?",
+        options: ["Berlin", "Paris", "Rome", "Madrid"],
+        answer: "Paris"
+    },
+    {
+        question: "Who wrote 'Hamlet'?",
+        options: ["Tolkien", "Shakespeare", "Hemingway", "Dickens"],
+        answer: "Shakespeare"
+    }
 ];
 
-const questionContainer = document.getElementById('question-container');
-const answerButtons = document.getElementById('answer-buttons');
-const nextButton = document.getElementById('next-btn');
-const result = document.getElementById('result');
-
-let currentQuestionIndex = 0;
+let currentQuestion = 0;
 let score = 0;
+let answers = [];
+let shuffledQuestions = [...quizData].sort(() => Math.random() - 0.5);
 
-function startQuiz() {
-  currentQuestionIndex = 0;
-  score = 0;
-  nextButton.style.display = 'none';
-  result.innerText = '';
-  showQuestion();
+function loadQuestion() {
+    const q = shuffledQuestions[currentQuestion];
+    document.getElementById('question').innerText = q.question;
+    const optionsDiv = document.getElementById('options');
+    optionsDiv.innerHTML = '';
+    q.options.forEach(option => {
+        const btn = document.createElement('button');
+        btn.innerText = option;
+        btn.onclick = (e) => checkAnswer(e, q.answer);
+        optionsDiv.appendChild(btn);
+    });
+    document.getElementById('next-btn').style.display = 'none';
+    document.getElementById('end-btn').style.display = 'inline-block';
 }
 
-function showQuestion() {
-  resetState();
-  const currentQuestion = questions[currentQuestionIndex];
-  questionContainer.innerText = currentQuestion.question;
-
-  // Shuffle answers for each question
-  const shuffledAnswers = currentQuestion.answers.sort(() => Math.random() - 0.5);
-
-  shuffledAnswers.forEach(answer => {
-    const button = document.createElement('li');
-    button.innerText = answer.text;
-    button.classList.add('answer-btn');
-    if (answer.correct) {
-      button.dataset.correct = "true";
-    }
-    button.addEventListener('click', selectAnswer);
-    answerButtons.appendChild(button);
-  });
-}
-
-function resetState() {
-  nextButton.style.display = 'none';
-  endBtn.onclick = () => location.reload();
-  result.appendChild(endBtn);
-}
-result.innerText = '';
-  while (answerButtons.firstChild) {
-    answerButtons.removeChild(answerButtons.firstChild);
-  }
-}
-
-function selectAnswer(e) {
-  const selectedBtn = e.target;
-  const correct = selectedBtn.dataset.correct === "true";
-
-  if (correct) {
-    score++;
-    result.innerText = "Correct!";
-  } else {
-    result.innerText = "Wrong!";
-  }
-
-  // Set colors
-  Array.from(answerButtons.children).forEach(button => {
-    if (button.dataset.correct === "true") {
-      button.classList.add('correct');
+function checkAnswer(e, correct) {
+    const selected = e.target.innerText;
+    answers.push({
+        question: shuffledQuestions[currentQuestion].question,
+        selected,
+        correct,
+        isCorrect: selected === correct
+    });
+    if (selected === correct) {
+        score++;
+        document.getElementById('result').innerText = Correct!;
     } else {
-      button.classList.add('wrong');
+        document.getElementById('result').innerText = Wrong! Answer: ${correct};
     }
-    // Disable all buttons after an answer is chosen
-    button.removeEventListener('click', selectAnswer);
-  });
-
-  nextButton.style.display = 'inline-block';
+    document.getElementById('next-btn').style.display = 'inline-block';
+    document.getElementById('end-btn').style.display = 'none';
 }
 
-nextButton.addEventListener('click', () => {
-  currentQuestionIndex++;
-  if (currentQuestionIndex < questions.length) {
-    showQuestion();
-  } else {
-    showResult();
-  }
-});
+document.getElementById('next-btn').onclick = () => {
+    currentQuestion++;
+    if (currentQuestion < shuffledQuestions.length) {
+        loadQuestion();
+        document.getElementById('result').innerText = '';
+    } else {
+        showSummary();
+    }
+};
 
-function showResult() {
-  questionContainer.innerText = '';
-  answerButtons.innerHTML = '';
-  nextButton.style.display = 'none';
-  result.innerHTML = `
-    <p>Thank you for participating in the quiz!</p>
-    <p>Your score: score /{questions.length}</p>
-  `;
+document.getElementById('end-btn').onclick = () => {
+    showSummary();
+};
 
-  const endBtn = document.createElement('button');
-  endBtn.id = 'end-btn';
-  endBtn.innerText = "End Quiz";
+function showSummary() {
+    document.getElementById('question').innerText = Quiz Over! Score: ${score}/${quizData.length};
+    document.getElementById('options').innerHTML = '';
+    document.getElementById('next-btn').style.display = 'none';
+    document.getElementById('end-btn').style.display = 'none';
+    document.getElementById('result').innerHTML = `
+        <p>Thanks for taking the quiz!</p>
+        <button onclick="location.reload()">Restart Quiz</button>
+    `;
+    let summary = '<h3>Answers:</h3>';
+    answers.forEach((a, i) => {
+        summary += `<p>Q${i+1}: ${a.question} - ${a.isCorrect ? '✅ Correct' : ❌ Wrong (You: ${a.selected}, Ans: ${a.correct})}</p>`;
+    });
+    document.getElementById('summary').innerHTML = summary;
+}
 
-// Initialize quiz on page load
-startQuiz();
+loadQuestion();
