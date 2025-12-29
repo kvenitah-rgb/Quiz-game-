@@ -62,21 +62,37 @@ function checkAnswer(e) {
         showResult(`Wrong! Answer: ${correct}`);
     }
 }
+function showResult() {
+  clearInterval(timer); // Stop the timer
 
-function showResult(msg) {
-    document.getElementById('result').innerText = msg;
-    document.getElementById('next-btn').style.display = 'inline-block';
-    document.getElementById('next-btn').onclick = () => {
-        currentQuestion++;
-        if (currentQuestion < shuffledQuestions.length) {
-            loadQuestion();
-            document.getElementById('result').innerText = '';
-        } else {
-            document.getElementById('question').innerText = `Quiz Over! Score: ${score}/${quizData.length}`;
-            document.getElementById('options').innerHTML = '';
-            document.getElementById('next-btn').style.display = 'none';
-        }
-    };
+  // Clear previous content
+  questionContainer.innerHTML = '';
+  answerButtons.innerHTML = '';
+  nextButton.style.display = 'none';
+
+  // Show thank you message and score
+  result.innerHTML = `
+    <p>Thank you for participating in the quiz!</p>
+    <p>Your score: score /{questions.length}</p>
+  `;
+
+  // Create End Quiz button
+  const endBtn = document.createElement('button');
+  endBtn.textContent = "End Quiz";
+  endBtn.style.marginTop = "15px";
+  endBtn.style.padding = "10px 20px";
+  endBtn.style.backgroundColor = "#800000";
+    endBtn.style.color = "#fff";
+  endBtn.style.border = "none";
+  endBtn.style.borderRadius = "5px";
+  endBtn.style.cursor = "pointer";
+
+  // Restart page on click
+  endBtn.onclick = () => {
+    location.reload(); // Reloads the page to start over
+  };
+
+  result.appendChild(endBtn);
 }
 
 loadQuestion();
