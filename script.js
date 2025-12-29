@@ -8,6 +8,33 @@ const questions = [
       { text: "Berlin", correct: false },
       { text: "Madrid", correct: false }
     ]
+  {
+    question: "which country is the Pearl of Africa?",
+        answers: [
+      { text: "london", correct: false },
+      { text: "Berlin", correct: false },
+      { text: "Tanzania", correct: false },
+      { text: "Uganda", correct: true }
+    ]
+  }
+];
+  {
+    question: "What color is the sky?",
+    answers: [
+      { text: "green", correct: false },
+      { text: "pink", correct: false },
+      { text: "yellow", correct: false },
+      { text: "blue", correct: true }
+    ]
+  }
+];
+  {
+    question: "HTML stands for?",
+    answers: [
+      {text:"Hyper Tech Markup Language",correct: false},
+      {text:"High Text Machine Language",correct: false},
+      {text:"HyperText Markup Language",correct: true}
+  ]
   },
   {
     question: "Which language runs in a web browser?",
