@@ -190,21 +190,27 @@
 
       nextButton.style.display = 'inline-block';
     }
+    
+     nextButton.addEventListener('click', () => {
+  currentQuestionIndex++;
+  if (currentQuestionIndex < shuffledQuestions.length) {
+    startTimer();
+    showQuestion();
+  } else {
+    showFinalResult();
+  }
+});
 
-    nextButton.addEventListener('click', () => {
-      currentQuestionIndex++;
-      if (currentQuestionIndex < questions.length) {
-        showQuestion();
-      } else {
-        showResult();
-      }
-    });
+function showResult(message) {
+  questionContainer.textContent = '';
+  answerButtons.innerHTML = '';
+  nextButton.style.display = 'none';
+  resultDisplay.textContent = message + ` Your Score: score/{questions.length}`;
+}
 
-    function showResult()  {
-      questionContainer.innerText = '';
-      answerButtons.innerHTML = '';
-      nextButton.style.display = 'none';
-      result.innerHTML = `
+function showFinalResult() {
+  showResult("Quiz Completed!");
+} result.innerHTML = `
         <p>Thank you for participating in the quiz!</p>
         <p>Your score: score /{questions.length}</p>
     }`;
