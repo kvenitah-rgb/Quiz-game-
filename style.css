@@ -1,62 +1,32 @@
 body {
-  font-family: Arial, sans-serif;
-  background: #f2f2f2;
-  display: flex;
-  justify-content: center;
-  padding: 20px;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #f0f0f0;
 }
 
 .quiz-container {
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  width: 400px;
-  box-shadow: 0 0 10px #aaa;
+    text-align: center;
+    width: 400px;
+    padding: 2em;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-h1 {
-  text-align: center;
+#options {
+    margin: 1em 0;
 }
 
-#timer {
-  text-align: right;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-#answer-buttons {
-  list-style: none;
-  padding: 0;
-}
-
-#answer-buttons li {
-  background: #eee;
-  margin: 8px 0;
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-[12/29, 6:08 AM] Chatgpt: #answer-buttons li:hover {
-  background: #ddd;
-}
-
-#answer-buttons li.correct {
-  background: #c8e6c9;
-}
-
-#answer-buttons li.wrong {
-  background: #ffcdd2;
-}
-
-#next-btn {
-  margin-top: 15px;
-  padding: 10px 20px;
-  display: none;
+button {
+    padding: 0.5em 1em;
+    margin: 0.5em;
+    cursor: pointer;
 }
 
 #result {
-  margin-top: 20px;
-  font-weight: bold;
-  text-align: center;
+    font-size: 11.2em;
+    margin-top: 1em;
 }
