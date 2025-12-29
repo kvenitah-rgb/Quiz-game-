@@ -88,19 +88,20 @@ nextButton.addEventListener('click', () => {currentQuestionIndex++;
   }
 });
 
-function showResult() {
-  questionContainer.innerText = '';
-  answerButtons.innerHTML = '';
+function showResult() 
+  questionContainer.innerText = ”;
+  answerButtons.innerHTML = ”;
   nextButton.style.display = 'none';
   result.innerHTML = `
     <p>Thank you for participating in the quiz!</p>
-    <p>Your score: score /{questions.length}</p>
-    <button id="end-btn">End Quiz</button>
+    <p>Your score:{score} / ${questions.length}</p>
   `;
 
-  document.getElementById('end-btn').addEventListener('click', () => {
-    location.reload();
-  });
+  const endBtn = document.createElement('button');
+  endBtn.id = 'end-btn';
+  endBtn.innerText = "End Quiz";
+  endBtn.onclick = () => location.reload();
+  result.appendChild(endBtn);
 }
 // Start quiz on load
 startQuiz();
