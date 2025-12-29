@@ -1,5 +1,3 @@
-console.log("Loading question", currentQuestionIndex);
-  
 const questions = [
   {
     question: "What is the capital of France?",
@@ -20,7 +18,6 @@ const questions = [
     ]
   }
 ];
-
 const questionContainer = document.getElementById("question-container");
 const answerButtons = document.getElementById("answer-buttons");
 const nextButton = document.getElementById("next-btn");
@@ -32,15 +29,57 @@ let score = 0;
 let timer;
 let timeLeft = 30;
 const shuffledQuestions = questions.sort(() => Math.random() - 0.5);
-if (currentQuestionIndex === shuffledQuestions.length - 1) {
+
+startQuiz();
+
+function startQuiz() {
+  showQuestion();
+  startTimer();
+}
+
+function showQuestion() {
+  resetState();
+  console.log("Loading question", currentQuestionIndex);
+
+  const currentQuestion = shuffledQuestions[currentQuestionIndex];
+  questionContainer.innerText = currentQuestion.question;
+
+  currentQuestion.answers.forEach(answer => {
+    const li = document.createElement("li");
+    li.innerText = answer.text;
+    li.addEventListener("click", () => selectAnswer(answer, li));
+    answerButtons.appendChild(li);
+  });
+
+  nextButton.style.display = "none";
+}
+
+function resetState() {
+  questionContainer.innerHTML = "";
+  answerButtons.innerHTML = "";
+  result.innerHTML = "";
+}
+
+function selectAnswer(answer, li) {
+  const correct = answer.correct;
+  setStatusClass(li, correct);
+
+  if (correct) score++;
+  Array.from(answerButtons.children).forEach(button => {
+    button.removeEventListener("click", () => {});
+    button.style.pointerEvents = "none";
+  });
+
+  if (currentQuestionIndex === shuffledQuestions.length - 1) {
     nextButton.innerText = "Finish";
     nextButton.onclick = showResult;
   } else {
+    nextButton.innerText = "Next";
     nextButton.onclick = () => {
       currentQuestionIndex++;
       showQuestion();
     };
-   }
+  }
 
   nextButton.style.display = "block";
 }
@@ -51,8 +90,7 @@ function setStatusClass(element, correct) {
 
 function showResult() {
   clearInterval(timer);
-  questionContainer.innerHTML = '';
-  answerButtons.innerHTML = '';
+  resetState();
   nextButton.style.display = "none";
 
   result.innerHTML = `
@@ -73,9 +111,21 @@ function showResult() {
   result.appendChild(endBtn);
 }
 
+function startTimer() {
+  timerDisplay.innerText = Time: timeLefts;
+  timer = setInterval(() => 
+    timeLeft–;
+    timerDisplay.innerText = Time:{timeLeft}s;
+
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      autoEndQuiz();
+    }
+  }, 1000);
+}
+
 function autoEndQuiz() {
-  questionContainer.innerHTML = '';
-  answerButtons.innerHTML = '';
+  resetState();
   nextButton.style.display = "none";
 
   result.innerHTML = `
@@ -90,6 +140,5 @@ function autoEndQuiz() {
   }, 5000);
 }
 
-  
-  
 
+  
