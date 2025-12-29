@@ -199,7 +199,10 @@
       }
     });
 
-    function showResult() {
+    function showResult()  {
+  const finalScore = `${score} / ${questions.length}`;
+  resultElement.textContent = finalScore;
+  
       questionContainer.innerText = '';
       answerButtons.innerHTML = '';
       nextButton.style.display = 'none';
