@@ -1,44 +1,61 @@
+This is the JavaScript code 
 const questions = [
   {
-    question: "What is the capital of France?",
-    answers: [
-      { text: "Paris", correct: true },
-      { text: "London", correct: false },
-      { text: "Berlin", correct: false },
-      { text: "Madrid", correct: false }
-    ]
+    question: "What is 2 + 2?",
+    answers: ["3", "4", "5", "6"],
+    correct: "4"
   },
   {
-    question: "Which language runs in a web browser?",
-    answers: [
-      { text: "Java", correct: false },
-      { text: "C", correct: false },
-      { text: "Python", correct: false },
-      { text: "JavaScript", correct: true }
-    ]
+    question: "Capital of France?",
+    answers: ["London", "Berlin", "Paris", "Madrid"],
+    correct: "Paris"
+  },
+  {
+    question: "What color is the sky?",
+    answers: ["Green", "Blue", "Red", "Yellow"],
+    correct: "Blue"
+  },
+  {
+    question: "HTML stands for?",
+    answers: ["Hyper Tech Markup Language", "High Text Machine Language", "HyperText Markup Language", "None"],
+    correct: "HyperText Markup Language"
   }
 ];
-
-const questionContainer = document.getElementById('question-container');
-const answerButtons = document.getElementById('answer-buttons');
-const nextButton = document.getElementById('next-btn');
-const result = document.getElementById('result');
 
 let shuffledQuestions = [];
 let currentQuestionIndex = 0;
 let score = 0;
+let timer;
+let timeLeft = 30;
 
+const questionContainer = document.getElementById('question-container');
+const answerButtons = document.getElementById('answer-buttons');
+const nextButton = document.getElementById('next-btn');
+const resultDisplay = document.getElementById('result');
+[12/29, 6:08 AM] Chatgpt: const timerDisplay = document.getElementById('timer');
 
 function startQuiz() {
+  shuffledQuestions = questions.sort(() => Math.random() - 0.5);
   currentQuestionIndex = 0;
   score = 0;
-  result.innerHTML = '';
   resultDisplay.textContent = '';
-
   nextButton.style.display = 'none';
+  startTimer();
   showQuestion();
 }
 
+function startTimer() {
+  timeLeft = 30;
+  timerDisplay.textContent = Time: timeLeft;
+  timer = setInterval(() => 
+    timeLeft–;
+    timerDisplay.textContent = Time:{timeLeft};
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      showResult("Time's up!");
+    }
+  }, 1000);
+}
 
 function showQuestion() {
   resetState();
@@ -65,7 +82,7 @@ function selectAnswer(selected, correctAnswer) {
     if (option.textContent === correctAnswer) {
 [12/29, 6:08 AM] Chatgpt: option.classList.add('correct');
     } else {
- option.classList.add('wrong');
+      option.classList.add('wrong');
     }
     option.style.pointerEvents = 'none';
   });
@@ -93,26 +110,11 @@ function showResult(message) {
   answerButtons.innerHTML = '';
   nextButton.style.display = 'none';
   resultDisplay.textContent = message + ` Your Score: score/{questions.length}`;
-  answerButtons.innerHTML = ”;
-  nextButton.style.display = 'none';
-  result.innerHTML = `
-    <p>Thank you for participating in the quiz!</p>
-    <p>Your score:{score} / ${questions.length}</p>
-  `;
-  }
-const endBtn = document.createElement('button');
-  endBtn.id = 'end-btn';
-  endBtn.innerText = "End Quiz";
-  endBtn.onclick = () => location.reload();
-  result.appendChild(endBtn);
 }
+
 function showFinalResult() {
   showResult("Quiz Completed!");
 }
-// Start quiz on load
+
 startQuiz();
-
-
-
-
-
+```
