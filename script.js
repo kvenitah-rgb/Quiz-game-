@@ -1,85 +1,120 @@
+This is the JavaScript code 
 const questions = [
   {
-    question: "What is the capital of France?",
-    answers: [
-      { text: "Paris", correct: true },
-      { text: "London", correct: false },
-      { text: "Berlin", correct: false },
-      { text: "Madrid", correct: false }
-    ]
+    question: "What is 2 + 2?",
+    answers: ["3", "4", "5", "6"],
+    correct: "4"
   },
   {
-    question: "Which language runs in a web browser?",
-    answers: [
-      { text: "Java", correct: false },
-      { text: "C", correct: false },
-      { text: "Python", correct: false },
-      { text: "JavaScript", correct: true }
-    ]
+    question: "Capital of France?",
+    answers: ["London", "Berlin", "Paris", "Madrid"],
+    correct: "Paris"
   },
   {
-    question: "What does CSS stand for?",
-    answers: [
-      { text: "Central Style Sheets", correct: false },
-      { text: "Cascading Style Sheets", correct: true },
-      { text: "Cascading Simple Sheets", correct: false },
-         { text: "Cars SUVs Sailboats", correct: false }
-    ]
+    question: "What color is the sky?",
+    answers: ["Green", "Blue", "Red", "Yellow"],
+    correct: "Blue"
+  },
+  {
+    question: "HTML stands for?",
+    answers: ["Hyper Tech Markup Language", "High Text Machine Language", "HyperText Markup Language", "None"],
+    correct: "HyperText Markup Language"
   }
 ];
 
-const questionContainer = document.getElementById("question-container");
-const answerButtons = document.getElementById("answer-buttons");
-const nextButton = document.getElementById("next-btn");
-const selectedBtn = e.target;
-  const correct = selectedBtn.dataset.correct === "true";
+let shuffledQuestions = [];
+let currentQuestionIndex = 0;
+let score = 0;
+let timer;
+let timeLeft = 30;
 
-  if (correct) score++;
+const questionContainer = document.getElementById('question-container');
+const answerButtons = document.getElementById('answer-buttons');
+const nextButton = document.getElementById('next-btn');
+const resultDisplay = document.getElementById('result');
+[12/29, 6:08 AM] Chatgpt: const timerDisplay = document.getElementById('timer');
 
-  Array.from(answerButtons.children).forEach(button => {
-    setStatusClass(button, button.dataset.correct === "true");
-    button.disabled = true;
+function startQuiz() {
+  shuffledQuestions = questions.sort(() => Math.random() - 0.5);
+  currentQuestionIndex = 0;
+  score = 0;
+  resultDisplay.textContent = '';
+  nextButton.style.display = 'none';
+  startTimer();
+  showQuestion();
+}
+
+function startTimer() {
+  timeLeft = 30;
+  timerDisplay.textContent = Time: timeLeft;
+  timer = setInterval(() => 
+    timeLeft–;
+    timerDisplay.textContent = Time:{timeLeft};
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      showResult("Time's up!");
+    }
+  }, 1000);
+}
+
+function showQuestion() {
+  resetState();
+  const question = shuffledQuestions[currentQuestionIndex];
+  questionContainer.textContent = question.question;
+
+  question.answers.forEach(answer => {
+    const li = document.createElement('li');
+    li.textContent = answer;
+    li.addEventListener('click', () => selectAnswer(li, question.correct));
+    answerButtons.appendChild(li);
+  });
+}
+
+function resetState() {
+  nextButton.style.display = 'none';
+  answerButtons.innerHTML = '';
+}
+
+function selectAnswer(selected, correctAnswer) {
+  const options = answerButtons.children;
+  Array.from(options).forEach(option => {
+    option.classList.remove('correct', 'wrong');
+    if (option.textContent === correctAnswer) {
+[12/29, 6:08 AM] Chatgpt: option.classList.add('correct');
+    } else {
+      option.classList.add('wrong');
+    }
+    option.style.pointerEvents = 'none';
   });
 
-  if (currentQuestionIndex === shuffledQuestions.length - 1) {
-    nextButton.innerText = "Finish";
-    nextButton.onclick = showResult;
-  } else {
-    nextButton.onclick = () => {
-      currentQuestionIndex++;
-      showQuestion();
-    };
+  if (selected.textContent === correctAnswer) {
+    score++;
   }
 
-  nextButton.style.display = "block";
-}
-
-function setStatusClass(element, correct) {
-  element.classList.add(correct ? "correct" : "wrong");
-    }
-
-function showResult() {
   clearInterval(timer);
-  questionContainer.innerHTML = '';
-  answerButtons.innerHTML = '';
-  nextButton.style.display = "none";
-
-  result.innerHTML = `
-    <p>Thank you for participating in the quiz!</p>
-    <p>Your score: score /{shuffledQuestions.length}</p>
-  `;
-
-  const endBtn = document.createElement('button');
-  endBtn.textContent = "End Quiz";
-  endBtn.style.marginTop = "15px";
-  endBtn.style.padding = "10px 20px";
-  endBtn.style.backgroundColor = "#800000";
-  endBtn.style.color = "#fff";
-  endBtn.style.border = "none";
-  endBtn.style.borderRadius = "5px";
-  endBtn.style.cursor = "pointer";
-    endBtn.onclick = () => location.reload();
-  result.appendChild(endBtn);
+  nextButton.style.display = 'inline';
 }
 
+nextButton.addEventListener('click', () => {
+  currentQuestionIndex++;
+  if (currentQuestionIndex < shuffledQuestions.length) {
+    startTimer();
+    showQuestion();
+  } else {
+    showFinalResult();
+  }
+});
 
+function showResult(message) {
+  questionContainer.textContent = '';
+  answerButtons.innerHTML = '';
+  nextButton.style.display = 'none';
+  resultDisplay.textContent = message + ` Your Score: score/{questions.length}`;
+}
+
+function showFinalResult() {
+  showResult("Quiz Completed!");
+}
+
+startQuiz();
+```
