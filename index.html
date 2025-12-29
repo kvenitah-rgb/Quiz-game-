@@ -191,14 +191,7 @@
       nextButton.style.display = 'inline-block';
     }
     
-     nextButton.addEventListener('click', () => {
-  currentQuestionIndex++;
-  if (currentQuestionIndex < shuffledQuestions.length) {
-    showQuestion();
-  } else {
-    showFinalResult();
-  }
-});
+     
 
 function showResult(message) {
   questionContainer.textContent = '';
