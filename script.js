@@ -54,8 +54,10 @@ function showQuestion() {
 function resetState() {
   nextButton.style.display = "none";
   answerButtons.innerHTML = "";
-  result.innerHTML = "";
+  // Remove this line to keep the score visible:
+  // result.innerHTML = "";
 }
+
 
 function selectAnswer(button, correct) {
   if (correct) {
