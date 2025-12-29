@@ -69,6 +69,58 @@ function resetState() {
   endBtn.onclick = () => location.reload();
   result.appendChild(endBtn);
 }
+result.innerText = '';
+  while (answerButtons.firstChild) {
+    answerButtons.removeChild(answerButtons.firstChild);
+  }
+}
+
+function selectAnswer(e) {
+  const selectedBtn = e.target;
+  const correct = selectedBtn.dataset.correct === "true";
+
+  if (correct) {
+    score++;
+    result.innerText = "Correct!";
+  } else {
+    result.innerText = "Wrong!";
+  }
+
+  // Set colors
+  Array.from(answerButtons.children).forEach(button => {
+    if (button.dataset.correct === "true") {
+      button.classList.add('correct');
+    } else {
+      button.classList.add('wrong');
+    }
+    // Disable all buttons after an answer is chosen
+    button.removeEventListener('click', selectAnswer);
+  });
+
+  nextButton.style.display = 'inline-block';
+}
+
+nextButton.addEventListener('click', () => {
+  currentQuestionIndex++;
+  if (currentQuestionIndex < questions.length) {
+    showQuestion();
+  } else {
+    showResult();
+  }
+});
+
+function showResult() {
+  questionContainer.innerText = '';
+  answerButtons.innerHTML = '';
+  nextButton.style.display = 'none';
+  result.innerHTML = `
+    <p>Thank you for participating in the quiz!</p>
+    <p>Your score: score /{questions.length}</p>
+  `;
+
+  const endBtn = document.createElement('button');
+  endBtn.id = 'end-btn';
+  endBtn.innerText = "End Quiz";
 
 // Initialize quiz on page load
 startQuiz();
