@@ -48,7 +48,8 @@
       color: white;
     }
     #answer-buttons li.correct {
-      background: #c8e6c9;color: #2e7d32;
+      background: #c8e6c9;
+[12/29, 12:20 PM] Chatgpt: color: #2e7d32;
       cursor: default;
     }
     #answer-buttons li.wrong {
@@ -88,7 +89,6 @@
     <ul id="answer-buttons"></ul>
     <button id="next-btn">Next</button>
     <div id="result"></div>
-
   </div>
 
   <script>
@@ -105,7 +105,7 @@
       {
         question: "Which language runs in a web browser?",
         answers: [
-          { text: "Java", correct: false },
+[12/29, 12:20 PM] Chatgpt: { text: "Java", correct: false },
           { text: "C", correct: false },
           { text: "Python", correct: false },
           { text: "JavaScript", correct: true }
@@ -144,7 +144,7 @@
       questionContainer.innerText = currentQuestion.question;
 
       // Shuffle answers for each question
-      const shuffledAnswers = currentQuestion.answers.sort(() => Math.random() - 0.5);
+[12/29, 12:20 PM] Chatgpt: const shuffledAnswers = currentQuestion.answers.sort(() => Math.random() - 0.5);
 
       shuffledAnswers.forEach(answer => {
         const button = document.createElement('li');
@@ -185,27 +185,29 @@
           button.classList.add('wrong');
         }
         // Disable all buttons after an answer is chosen
-        button.removeEventListener('click', selectAnswer);
+[12/29, 12:20 PM] Chatgpt: button.removeEventListener('click', selectAnswer);
       });
 
       nextButton.style.display = 'inline-block';
     }
-    
-     
 
-function showResult(message) {
-  questionContainer.textContent = '';
-  answerButtons.innerHTML = '';
-  nextButton.style.display = 'none';
-  resultDisplay.textContent = message + ` Your Score: score/{questions.length}`;
-}
+    nextButton.addEventListener('click', () => {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) {
+        showQuestion();
+      } else {
+        showResult();
+      }
+    });
 
-function showFinalResult() {
-  showResult("Quiz Completed!");
-} result.innerHTML = `
+    function showResult() {
+      questionContainer.innerText = '';
+      answerButtons.innerHTML = '';
+      nextButton.style.display = 'none';
+      result.innerHTML = `
         <p>Thank you for participating in the quiz!</p>
         <p>Your score: score /{questions.length}</p>
-    }`;
+      `;
 
       const endBtn = document.createElement('button');
       endBtn.id = 'end-btn';
@@ -219,7 +221,3 @@ function showFinalResult() {
   </script>
 </body>
 </html>
-
-
----
-  
