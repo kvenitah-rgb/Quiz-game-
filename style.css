@@ -22,12 +22,6 @@ h1 {
   color: #800000;
 }
 
-#timer {
-  text-align: right;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #800000;
-}
 
 #answer-buttons {
   list-style: none;
@@ -70,12 +64,12 @@ h1 {
 
 
 #options {
-    margin: 1em 0;
+    margin: 10px 0;
 }
 
 button {
-    padding: 0.5em 1em;
-    margin: 0.5em;
+    padding: 5px 2px;
+    margin: 10px;
     cursor: pointer;
 }
 #result {
