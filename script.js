@@ -1,3 +1,4 @@
+
 const questions = [
   {
     question: "What is the capital of France?",
@@ -30,26 +31,25 @@ let score = 0;
 function startQuiz() {
   currentQuestionIndex = 0;
   score = 0;
+  nextButton.style.display = "none";
   result.innerHTML = "";
-  nextButton.innerText = "Next";
   showQuestion();
 }
 
 function showQuestion() {
   resetState();
-
   const currentQuestion = questions[currentQuestionIndex];
-    questionContainer.innerText = currentQuestion.question;
+  const questionElement = document.createElement("h2");
+  questionElement.innerText = currentQuestion.question;
+  questionContainer.innerHTML = "";
+  questionContainer.appendChild(questionElement);
 
   currentQuestion.answers.forEach(answer => {
-    const li = document.createElement("li");
-    li.innerText = answer.text;
-    li.classList.add("btn");
-    if (answer.correct) {
-      li.dataset.correct = answer.correct;
-    }
-    li.addEventListener("click", selectAnswer);
-    answerButtons.appendChild(li);
+    const button = document.createElement("li");
+    button.innerText = answer.text;
+    button.classList.add("answer-btn");
+    button.addEventListener("click", () => selectAnswer(button, answer.correct));
+    answerButtons.appendChild(button);
   });
 }
 
@@ -59,25 +59,18 @@ function resetState() {
   result.innerHTML = "";
 }
 
-function selectAnswer(e) {
-  const selectedBtn = e.target;
-  const correct = selectedBtn.dataset.correct === "true";
-
+function selectAnswer(button, correct) {
   if (correct) {
-    selectedBtn.classList.add("correct");
     score++;
+    button.classList.add("correct");
   } else {
-    selectedBtn.classList.add("wrong");
+    button.classList.add("wrong");
   }
-
   Array.from(answerButtons.children).forEach(btn => {
-    if (btn.dataset.correct === "true") {
-      btn.classList.add("correct");
-    }
+    btn.removeEventListener("click", () => {});
     btn.disabled = true;
   });
-
-  nextButton.style.display = "block";
+  nextButton.style.display = "inline-block";
 }
 
 nextButton.addEventListener("click", () => {
@@ -90,80 +83,17 @@ nextButton.addEventListener("click", () => {
 });
 
 function showResult() {
-  resetState();
-  questionContainer.innerText = "";
-  result.innerHTML = `
-    <p>Thank you for participating in the quiz!</p>
-    questionContainer.innerText = currentQuestion.question;
-
-  currentQuestion.answers.forEach(answer => {
-    const li = document.createElement("li");
-    li.innerText = answer.text;
-    li.classList.add("btn");
-    if (answer.correct) {
-      li.dataset.correct = answer.correct;
-    }
-    li.addEventListener("click", selectAnswer);
-    answerButtons.appendChild(li);
-  });
-}
-
-function resetState() {
-  nextButton.style.display = "none";
+  questionContainer.innerHTML = "";
   answerButtons.innerHTML = "";
-  result.innerHTML = "";
-}
-
-function selectAnswer(e) {
-  const selectedBtn = e.target;
-  const correct = selectedBtn.dataset.correct === "true";
-
-  if (correct) {
-    selectedBtn.classList.add("correct");
-    score++;
-  } else {
-    selectedBtn.classList.add("wrong");
-  }
-
-  Array.from(answerButtons.children).forEach(btn => {
-    if (btn.dataset.correct === "true") {
-      btn.classList.add("correct");
-    }
-    btn.disabled = true;
-  });
-
-  nextButton.style.display = "block";
-}
-
-nextButton.addEventListener("click", () => {
-  currentQuestionIndex++;
-  if (currentQuestionIndex < questions.length) {
-    showQuestion();
-  } else {
-    showResult();
-  }
-});
-
-function showResult() {
-  resetState();
-  questionContainer.innerText = "";
+  nextButton.style.display = "none";
   result.innerHTML = `
     <p>Thank you for participating in the quiz!</p>
     <p>Your score: score /{questions.length}</p>
+    <button id="end-btn">End Quiz</button>
   `;
-
-  const endBtn = document.createElement('button');
-  endBtn.textContent = "End Quiz";
-  endBtn.id = "end-btn";
-  endBtn.style.marginTop = "15px";
-  endBtn.style.padding = "10px 20px";
-  endBtn.style.backgroundColor = "maroon";
-  endBtn.style.color = "#fff";
-  endBtn.style.border = "none";
-  endBtn.style.borderRadius = "5px";
-  endBtn.style.cursor = "pointer";
-  endBtn.onclick = () => location.reload();
-  result.appendChild(endBtn);
+  document.getElementById("end-btn").addEventListener("click", () => {
+    location.reload();
+  });
 }
 
 startQuiz();
