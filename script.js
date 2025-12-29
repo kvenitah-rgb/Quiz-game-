@@ -16,15 +16,6 @@ const questions = [
       { text: "Python", correct: false },
       { text: "JavaScript", correct: true }
     ]
-  },
-  {
-    question: "What does CSS stand for?",
-    answers: [
-      { text: "Central Style Sheets", correct: false },
-      { text: "Cascading Style Sheets", correct: true },
-      { text: "Cascading Simple Sheets", correct: false },
-      { text: "Cars SUVs Sailboats", correct: false }
-    ]
   }
 ];
 
@@ -39,8 +30,8 @@ let score = 0;
 function startQuiz() {
   currentQuestionIndex = 0;
   score = 0;
+  result.innerHTML = '';
   nextButton.style.display = 'none';
-  result.innerText = '';
   showQuestion();
 }
 
@@ -49,15 +40,12 @@ function showQuestion() {
   const currentQuestion = questions[currentQuestionIndex];
   questionContainer.innerText = currentQuestion.question;
 
-  // Shuffle answers for each question
-  const shuffledAnswers = currentQuestion.answers.sort(() => Math.random() - 0.5);
-
-  shuffledAnswers.forEach(answer => {
+  currentQuestion.answers.forEach(answer => {
     const button = document.createElement('li');
     button.innerText = answer.text;
     button.classList.add('answer-btn');
-    if (answer.correct) {
-      button.dataset.correct = "true";
+    if(answer.correct) {
+      button.dataset.correct = answer.correct;
     }
     button.addEventListener('click', selectAnswer);
     answerButtons.appendChild(button);
@@ -66,10 +54,57 @@ function showQuestion() {
 
 function resetState() {
   nextButton.style.display = 'none';
-  endBtn.onclick = () => location.reload();
-  result.appendChild(endBtn);
+   answerButtons.innerHTML = '';
+  result.innerHTML = '';
 }
 
-// Initialize quiz on page load
+function selectAnswer(e) {
+  const selectedBtn = e.target;
+  const correct = selectedBtn.dataset.correct === "true";
+
+  if(correct) {
+    score++;
+    selectedBtn.classList.add('correct');
+    result.innerText = "Correct!";
+  } else { selectedBtn.classList.add('wrong');
+    result.innerText = "Wrong!";
+  }
+
+  Array.from(answerButtons.children).forEach(button => {
+    if(button.dataset.correct === "true") {
+      button.classList.add('correct');
+    }
+    button.removeEventListener('click', selectAnswer);
+  });
+
+  nextButton.style.display = 'block';
+}
+
+nextButton.addEventListener('click', () => {currentQuestionIndex++;
+  if(currentQuestionIndex < questions.length) {
+    showQuestion();
+  } else {
+    showResult();
+  }
+});
+
+function showResult() {
+  questionContainer.innerText = '';
+  answerButtons.innerHTML = '';
+  nextButton.style.display = 'none';
+  result.innerHTML = `
+    <p>Thank you for participating in the quiz!</p>
+    <p>Your score: score /{questions.length}</p>
+    <button id="end-btn">End Quiz</button>
+  `;
+
+  document.getElementById('end-btn').addEventListener('click', () => {
+    location.reload();
+  });
+}
+// Start quiz on load
 startQuiz();
+
+
+
 
