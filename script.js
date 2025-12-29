@@ -18,127 +18,84 @@ const questions = [
     ]
   }
 ];
+
 const questionContainer = document.getElementById("question-container");
 const answerButtons = document.getElementById("answer-buttons");
 const nextButton = document.getElementById("next-btn");
 const result = document.getElementById("result");
-const timerDisplay = document.getElementById("timer");
-
 let currentQuestionIndex = 0;
 let score = 0;
-let timer;
-let timeLeft = 30;
-const shuffledQuestions = questions.sort(() => Math.random() - 0.5);
-
-startQuiz();
 
 function startQuiz() {
+  currentQuestionIndex = 0;
+  score = 0;
+  nextButton.style.display = "none";
+  result.innerHTML = "";
   showQuestion();
-  startTimer();
 }
 
 function showQuestion() {
   resetState();
-  console.log("Loading question", currentQuestionIndex);
-
-  const currentQuestion = shuffledQuestions[currentQuestionIndex];
-  questionContainer.innerText = currentQuestion.question;
+  const currentQuestion = questions[currentQuestionIndex];
+  const questionElement = document.createElement("h2");
+  questionElement.innerText = currentQuestion.question;
+  questionContainer.innerHTML = "";
+  questionContainer.appendChild(questionElement);
 
   currentQuestion.answers.forEach(answer => {
-    const li = document.createElement("li");
-    li.innerText = answer.text;
-    li.addEventListener("click", () => selectAnswer(answer, li));
-    answerButtons.appendChild(li);
+    const button = document.createElement("li");
+    button.innerText = answer.text;
+    button.classList.add("answer-btn");
+    button.addEventListener("click", () => selectAnswer(button, answer.correct));
+    answerButtons.appendChild(button);
   });
-
-  nextButton.style.display = "none";
 }
 
 function resetState() {
-  questionContainer.innerHTML = "";
+  nextButton.style.display = "none";
   answerButtons.innerHTML = "";
   result.innerHTML = "";
 }
 
-function selectAnswer(answer, li) {
-  const correct = answer.correct;
-  setStatusClass(li, correct);
-
-  if (correct) score++;
-  Array.from(answerButtons.children).forEach(button => {
-    button.removeEventListener("click", () => {});
-    button.style.pointerEvents = "none";
-  });
-
-  if (currentQuestionIndex === shuffledQuestions.length - 1) {
-    nextButton.innerText = "Finish";
-    nextButton.onclick = showResult;
+function selectAnswer(button, correct) {
+  if (correct) {
+    score++;
+    button.classList.add("correct");
   } else {
-    nextButton.innerText = "Next";
-    nextButton.onclick = () => {
-      currentQuestionIndex++;
-      showQuestion();
-    };
+    button.classList.add("wrong");
+     }
+  Array.from(answerButtons.children).forEach(btn => {
+    btn.removeEventListener("click", () => {});
+    btn.disabled = true;
+  });
+  nextButton.style.display = "inline-block";
+}
+
+nextButton.addEventListener("click", () => {
+  currentQuestionIndex++;
+  if (currentQuestionIndex < questions.length) {
+    showQuestion();
+  } else {
+    showResult();
   }
-
-  nextButton.style.display = "block";
-}
-
-function setStatusClass(element, correct) {
-  element.classList.add(correct ? "correct" : "wrong");
-}
+});
 
 function showResult() {
-  clearInterval(timer);
-  resetState();
+  questionContainer.innerHTML = "";
+  answerButtons.innerHTML = "";
   nextButton.style.display = "none";
-
   result.innerHTML = `
     <p>Thank you for participating in the quiz!</p>
-    <p>Your score: score /{shuffledQuestions.length}</p>
+    <p>Your score: score /{questions.length}</p>
+    <button id="end-btn">End Quiz</button>
   `;
-
-  const endBtn = document.createElement('button');
-  endBtn.textContent = "End Quiz";
-  endBtn.style.marginTop = "15px";
-  endBtn.style.padding = "10px 20px";
-  endBtn.style.backgroundColor = "#800000";
-  endBtn.style.color = "#fff";
-  endBtn.style.border = "none";
-  endBtn.style.borderRadius = "5px";
-  endBtn.style.cursor = "pointer";
-  endBtn.onclick = () => location.reload();
-  result.appendChild(endBtn);
-}
-
-function startTimer() {
-  timerDisplay.innerText = Time: timeLefts;
-  timer = setInterval(() => 
-    timeLeft–;
-    timerDisplay.innerText = Time:{timeLeft}s;
-
-    if (timeLeft <= 0) {
-      clearInterval(timer);
-      autoEndQuiz();
-    }
-  }, 1000);
-}
-
-function autoEndQuiz() {
-  resetState();
-  nextButton.style.display = "none";
-
-  result.innerHTML = `
-    <p>⏱ Time is up!</p>
-    <p>Thank you for participating in the quiz!</p>
-    <p>Your score: score /{shuffledQuestions.length}</p>
-    <p>The page will refresh in 5 seconds...</p>
-  `;
-
-  setTimeout(() => {
+  document.getElementById("end-btn").addEventListener("click", () => {
     location.reload();
-  }, 5000);
+  });
 }
 
+startQuiz();
 
-  
+
+
+
