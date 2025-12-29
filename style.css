@@ -79,7 +79,18 @@ button {
     cursor: pointer;
 }
 
+
 #result {
-    font-size: 11.2em;
-    margin-top: 1em;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f8e6e6;
+  color: #800000;
+  border: 1px solid #800000;
+  border-radius: 5px;
+  text-align: center;
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 16px;
 }
+
