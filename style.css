@@ -1,0 +1,62 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f2f2f2;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.quiz-container {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  box-shadow: 0 0 10px #aaa;
+}
+
+h1 {
+  text-align: center;
+}
+
+#timer {
+  text-align: right;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+#answer-buttons {
+  list-style: none;
+  padding: 0;
+}
+
+#answer-buttons li {
+  background: #eee;
+  margin: 8px 0;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+[12/29, 6:08 AM] Chatgpt: #answer-buttons li:hover {
+  background: #ddd;
+}
+
+#answer-buttons li.correct {
+  background: #c8e6c9;
+}
+
+#answer-buttons li.wrong {
+  background: #ffcdd2;
+}
+
+#next-btn {
+  margin-top: 15px;
+  padding: 10px 20px;
+  display: none;
+}
+
+#result {
+  margin-top: 20px;
+  font-weight: bold;
+  text-align: center;
+}
