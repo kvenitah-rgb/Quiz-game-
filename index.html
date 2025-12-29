@@ -201,14 +201,13 @@
     });
 
     function showResult()  {
-
       questionContainer.innerText = '';
       answerButtons.innerHTML = '';
       nextButton.style.display = 'none';
       result.innerHTML = `
         <p>Thank you for participating in the quiz!</p>
         <p>Your score: score /{questions.length}</p>
-      `;
+    }`;
 
       const endBtn = document.createElement('button');
       endBtn.id = 'end-btn';
