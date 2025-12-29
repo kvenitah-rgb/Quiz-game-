@@ -100,15 +100,14 @@ function showResult(message) {
     <p>Your score:{score} / ${questions.length}</p>
   `;
   }
-
-function showFinalResult() {
-  showResult("Quiz Completed!");
-}
 const endBtn = document.createElement('button');
   endBtn.id = 'end-btn';
   endBtn.innerText = "End Quiz";
   endBtn.onclick = () => location.reload();
   result.appendChild(endBtn);
+}
+function showFinalResult() {
+  showResult("Quiz Completed!");
 }
 // Start quiz on load
 startQuiz();
