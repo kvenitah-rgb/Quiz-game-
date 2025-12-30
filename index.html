@@ -1,172 +1,22 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Quiz App</title>
-  </head>
+  <link rel="stylesheet" href="style.css" />
+</head>
 <body>
   <div class="quiz-container">
     <h1>Quiz App</h1>
+    <div id="timer">Time: 30</div>
     <div id="question-container"></div>
     <ul id="answer-buttons"></ul>
     <button id="next-btn">Next</button>
     <div id="result"></div>
   </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #fff;
-      display: flex;
-      justify-content: center;
-      padding: 20px;
-    }
-    .quiz-container {
-      background: #800000;
-      color: white;
-      padding: 20px;
-      border-radius: 10px;
-      width: 400px;
-      box-shadow: 0 0 10px #400000;
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 15px;
-    }
-    #question-container {
-      font-size: 1.2rem;
-      margin-bottom: 15px;
-    }
-    #answer-buttons {
-      list-style: none;
-      padding: 0;
-    }
-    #answer-buttons li {
-      background: white;
-      color: #800000;
-      margin: 8px 0;
-      padding: 10px;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background 0.3s;
-      user-select: none;
-    }
-    #answer-buttons li:hover {
-      background: #b04c4c;
-      color: white;
-    }
-    #answer-buttons li.correct {
-      background: #c8e6c9;
-[12/29, 12:20 PM] Chatgpt: color: #2e7d32;
-      cursor: default;
-    }
-    #answer-buttons li.wrong {
-      background: #ffcdd2;
-      color: #c62828;
-      cursor: default;
-    }
-    #next-btn, #end-btn {
-      margin-top: 15px;
-      padding: 10px 20px;
-      background: white;
-      color: #800000;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-      display: none;
-      user-select: none;
-    }
-    #next-btn:hover, #end-btn:hover {
-      background: #b04c4c;
-      color: white;
-    }
-    #result {
-      margin-top: 15px;
-      font-weight: bold;
-      font-size: 1.1rem;
-      min-height: 24px;
-      text-align: center;
-    }
-  </style>
-
-
-  <script>
-   let shuffledQuestions = [];
-let currentQuestionIndex = 0;
-let score = 0;
-
-const questionContainer = document.getElementById('question-container');
-const answerButtons = document.getElementById('answer-buttons');
-const nextButton = document.getElementById('next-btn');
-const resultDisplay = document.getElementById('result');
-
-
-function startQuiz() {
-  shuffledQuestions = questions.sort(() => Math.random() - 0.5);
-  currentQuestionIndex = 0;
-  score = 0;
-  resultDisplay.textContent = '';
-  nextButton.style.display = 'none';
-function showQuestion() {
-  resetState();
-  const question = shuffledQuestions[currentQuestionIndex];
-  questionContainer.textContent = question.question;
-
-  question.answers.forEach(answer => {
-    const li = document.createElement('li');
-    li.textContent = answer;
-    li.addEventListener('click', () => selectAnswer(li, question.correct));
-    answerButtons.appendChild(li);
-  });
-}
-
-function resetState() {
-  nextButton.style.display = 'none';
-  answerButtons.innerHTML = '';
-}
-
-function selectAnswer(selected, correctAnswer) {
-  const options = answerButtons.children;
-  Array.from(options).forEach(option => {
-    option.classList.remove('correct', 'wrong');
-    if (option.textContent === correctAnswer) {
-[12/29, 6:08 AM] Chatgpt: option.classList.add('correct');
-    } else {
-      option.classList.add('wrong');
-    }
-    option.style.pointerEvents = 'none';
-  });
-
-  if (selected.textContent === correctAnswer) {
-    score++;
-  }
-
-  clearInterval(timer);
-  nextButton.style.display = 'inline';
-}
-
-nextButton.addEventListener('click', () => {
-  currentQuestionIndex++;
-  if (currentQuestionIndex < shuffledQuestions.length) {
-    startTimer();
-    showQuestion();
-  } else {
-    showFinalResult();
-  }
-});
-
-function showResult(message) {
-  questionContainer.textContent = '';
-  answerButtons.innerHTML = '';
-  nextButton.style.display = 'none';
-  resultDisplay.textContent = message + ` Your Score: score/{questions.length}`;
-}
-
-function showFinalResult() {
-  showResult("Quiz Completed!");
-}
-startQuiz();
-  </script>
