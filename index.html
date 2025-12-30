@@ -5,15 +5,220 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Quiz App</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+    .quiz-container {
+      background: #800000;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 400px;
+      box-shadow: 0 0 10px #400000;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    #question-container {
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+    }
+    #answer-buttons {
+      list-style: none;
+      padding: 0;
+    }
+    #answer-buttons li {
+      background: white;
+      color: #800000;
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+      user-select: none;
+    }
+    #answer-buttons li:hover {
+      background: #b04c4c;
+      color: white;
+    }
+    #answer-buttons li.correct {
+      background: #c8e6c9;color: #2e7d32;
+      cursor: default;
+    }
+    #answer-buttons li.wrong {
+      background: #ffcdd2;
+      color: #c62828;
+      cursor: default;
+    }
+    #next-btn, #end-btn {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: white;
+      color: #800000;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      display: none;
+      user-select: none;
+    }
+    #next-btn:hover, #end-btn:hover {
+      background: #b04c4c;
+      color: white;
+    }
+    #result {
+      margin-top: 15px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      min-height: 24px;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
   <div class="quiz-container">
+    <h1>Quiz App</h1>
     <div id="question-container"></div>
     <ul id="answer-buttons"></ul>
-    <button id="next-btn" style="display: none;">Next</button>
+    <button id="next-btn">Next</button>
     <div id="result"></div>
   </div>
-  <script src="script.js"></script>
+
+  <script>
+    const questions = [
+      {
+        question: "What is the capital of France?",
+        answers: [
+          { text: "Paris", correct: true },
+          { text: "London", correct: false },
+          { text: "Berlin", correct: false },
+          { text: "Madrid", correct: false }
+        ]
+      },
+      {
+        question: "Which language runs in a web browser?",
+        answers: [
+{ text: "Java", correct: false },
+          { text: "C", correct: false },
+          { text: "Python", correct: false },
+          { text: "JavaScript", correct: true }
+        ]
+      },
+      {
+        question: "What does CSS stand for?",
+        answers: [
+          { text: "Central Style Sheets", correct: false },
+          { text: "Cascading Style Sheets", correct: true },
+          { text: "Cascading Simple Sheets", correct: false },
+          { text: "Cars SUVs Sailboats", correct: false }
+        ]
+      }
+    ];
+
+    const questionContainer = document.getElementById('question-container');
+    const answerButtons = document.getElementById('answer-buttons');
+    const nextButton = document.getElementById('next-btn');
+    const result = document.getElementById('result');
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    function startQuiz() {
+      currentQuestionIndex = 0;
+      score = 0;
+      nextButton.style.display = 'none';
+      result.innerText = '';
+      showQuestion();
+    }
+
+    function showQuestion() {
+      resetState();
+      const currentQuestion = questions[currentQuestionIndex];
+      questionContainer.innerText = currentQuestion.question;
+
+      // Shuffle answers for each question
+Let me know if you want me to split the CSS/JS into separate files or add more features!
+const shuffledAnswers = currentQuestion.answers.sort(() => Math.random() - 0.5);
+
+      shuffledAnswers.forEach(answer => {
+        const button = document.createElement('li');
+        button.innerText = answer.text;
+        button.classList.add('answer-btn');
+        if (answer.correct) {
+          button.dataset.correct = "true";
+        }
+        button.addEventListener('click', selectAnswer);
+        answerButtons.appendChild(button);
+      });
+    }
+
+    function resetState() {
+      nextButton.style.display = 'none';
+      result.innerText = '';
+      while (answerButtons.firstChild) {
+        answerButtons.removeChild(answerButtons.firstChild);
+      }
+    }
+
+    function selectAnswer(e) {
+      const selectedBtn = e.target;
+      const correct = selectedBtn.dataset.correct === "true";
+
+      if (correct) {
+        score++;
+        result.innerText = "Correct!";
+      } else {
+        result.innerText = "Wrong!";
+      }
+
+      // Set colors
+      Array.from(answerButtons.children).forEach(button => {
+        if (button.dataset.correct === "true") {
+          button.classList.add('correct');
+        } else {
+          button.classList.add('wrong');
+        }
+        // Disable all buttons after an answer is chosen
+button.removeEventListener('click', selectAnswer);
+      });
+
+      nextButton.style.display = 'inline-block';
+    }
+
+    nextButton.addEventListener('click', () => {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) {
+        showQuestion();
+      } else {
+        showResult();
+      }
+    });
+
+    function showResult() {
+      questionContainer.innerText = '';
+      answerButtons.innerHTML = '';
+      nextButton.style.display = 'none';
+      result.innerHTML = `
+        <p>Thank you for participating in the quiz!</p>
+        <p>Your score: score /{questions.length}</p>
+      `;
+
+      const endBtn = document.createElement('button');
+      endBtn.id = 'end-btn';
+      endBtn.innerText = "End Quiz";
+      endBtn.onclick = () => location.reload();
+      result.appendChild(endBtn);
+    }
+
+    // Initialize quiz on page load
+    startQuiz();
+  </script>
 </body>
 </html>
+
