@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Quiz App</title>
   <style>
-    body{
+    body {
       font-family: Arial, sans-serif;
       background: #fff;
       display: flex;
@@ -89,7 +89,6 @@
     <button id="next-btn">Next</button>
     <div id="result"></div>
   </div>
-</body>
 
   <script>
     const questions = [
@@ -105,7 +104,7 @@
       {
         question: "Which language runs in a web browser?",
         answers: [
-[12/29, 12:20 PM] Chatgpt: { text: "Java", correct: false },
+         { text: "Java", correct: false },
           { text: "C", correct: false },
           { text: "Python", correct: false },
           { text: "JavaScript", correct: true }
@@ -125,27 +124,120 @@
     const questionContainer = document.getElementById('question-container');
     const answerButtons = document.getElementById('answer-buttons');
     const nextButton = document.getElementById('next-btn');
-    const resultDisplay = document.getElementById('result');
+    const result = document.getElementById('result');
 
-
-    let shuffledQuestions = [];
     let currentQuestionIndex = 0;
     let score = 0;
 
     function startQuiz() {
-       shuffledQuestions = questions.sort(() => Math.random() - 0.5);
       currentQuestionIndex = 0;
       score = 0;
-      resultDisplay.textContent = '';
       nextButton.style.display = 'none';
+      result.innerText = '';
       showQuestion();
     }
 
     function showQuestion() {
       resetState();
-      const question = shuffledQuestions[currentQuestionIndex];
-      questionContainer.textContainer = question.question;
-      question.answers.forEach(answer => {
+      const currentQuestion = questions[currentQuestionIndex];
+      questionContainer.innerText = currentQuestion.question;
+
+      // Shuffle answers for each question
+[12/29, 12:20 PM] Chatgpt: const shuffledAnswers = currentQuestion.answers.sort(() => Math.random() - 0.5);
+
+      shuffledAnswers.forEach(answer => {
+        const button = document.createElement('li');
+        button.innerText = answer.text;
+        button.classList.add('answer-btn');
+        if (answer.correct) {
+          button.dataset.correct = "true";
+        }
+        button.addEventListener('click', selectAnswer);
+        answerButtons.appendChild(button);
+      });
+    }
+
+    function resetState() {
+      nextButton.style.display = 'none';
+      result.innerText = '';
+      while (answerButtons.firstChild) {
+        answerButtons.removeChild(answerButtons.firstChild);
+      }
+    }
+
+    function selectAnswer(e) {
+      const selectedBtn = e.target;
+      const correct = selectedBtn.dataset.correct === "true";
+
+      if (correct) {
+        score++;
+        result.innerText = "Correct!";
+      } else {
+        result.innerText = "Wrong!";
+      }
+
+      // Set colors
+      Array.from(answerButtons.children).forEach(button => {
+        if (button.dataset.correct === "true") {
+          button.classList.add('correct');
+        } else {
+          button.classList.add('wrong');
+        }
+        // Disable all buttons after an answer is chosen
+[12/29, 12:20 PM] Chatgpt: button.removeEventListener('click', selectAnswer);
+      });
+
+      nextButton.style.display = 'inline-block';
+    }
+
+    nextButton.addEventListener('click', () => {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) {
+        showQuestion();
+      } else {
+        showResult();
+      }
+    });
+
+    function showResult() {
+      questionContainer.innerText = '';
+      answerButtons.innerHTML = '';
+      nextButton.style.display = 'none';
+      result.innerHTML = `
+        <p>Thank you for participating in the quiz!</p>
+        <p>Your score: score /{questions.length}</p>
+      `;
+
+      const endBtn = document.createElement('button');
+      endBtn.id = 'end-btn';
+      endBtn.innerText = "End Quiz";
+      endBtn.onclick = () => location.reload();
+      result.appendChild(endBtn);
+    }
+    let shuffledQuestions = [];
+let currentQuestionIndex = 0;
+let score = 0;
+let timer;
+let timeLeft = 30;
+
+const questionContainer = document.getElementById('question-container');
+const answerButtons = document.getElementById('answer-buttons');
+const nextButton = document.getElementById('next-btn');
+const resultDisplay = document.getElementById('result');
+
+
+function startQuiz() {
+  shuffledQuestions = questions.sort(() => Math.random() - 0.5);
+  currentQuestionIndex = 0;
+  score = 0;
+  resultDisplay.textContent = '';
+  nextButton.style.display = 'none';
+function showQuestion() {
+  resetState();
+  const question = shuffledQuestions[currentQuestionIndex];
+  questionContainer.textContent = question.question;
+
+  question.answers.forEach(answer => {
     const li = document.createElement('li');
     li.textContent = answer;
     li.addEventListener('click', () => selectAnswer(li, question.correct));
@@ -153,8 +245,11 @@
   });
 }
 
+function resetState() {
+  nextButton.style.display = 'none';
+  answerButtons.innerHTML = '';
+}
 
-      // Shuffle answers for each question
 function selectAnswer(selected, correctAnswer) {
   const options = answerButtons.children;
   Array.from(options).forEach(option => {
@@ -171,7 +266,6 @@ function selectAnswer(selected, correctAnswer) {
     score++;
   }
 
-  clearInterval(timer);
   nextButton.style.display = 'inline';
 }
 
@@ -184,7 +278,8 @@ nextButton.addEventListener('click', () => {
     showFinalResult();
   }
 });
-  function showResult(message) {
+
+function showResult(message) {
   questionContainer.textContent = '';
   answerButtons.innerHTML = '';
   nextButton.style.display = 'none';
@@ -195,11 +290,8 @@ function showFinalResult() {
   showResult("Quiz Completed!");
 }
 
-startQuiz();
+    // Initialize quiz on page load
+    startQuiz();
   </script>
 </body>
 </html>
-
-
-
-    
