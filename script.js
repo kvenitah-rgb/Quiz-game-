@@ -1,74 +1,68 @@
 
 const questions = [
   {
-    question: "What is the capital of France?",
-    answers: [
-      { text: "Paris", correct: true },
-      { text: "London", correct: false },
-      { text: "Berlin", correct: false },
-      { text: "Madrid", correct: false }
-    ]
-  {
-    question: "which country is the Pearl of Africa?",
-        answers: [
-      { text: "london", correct: false },
-      { text: "Berlin", correct: false },
-      { text: "Tanzania", correct: false },
-      { text: "Uganda", correct: true }
-    ]
-  }
-];
-  {
-    question: "What color is the sky?",
-    answers: [
-      { text: "green", correct: false },
-      { text: "pink", correct: false },
-      { text: "yellow", correct: false },
-      { text: "blue", correct: true }
-    ]
-  }
-];
-  {
-    question: "HTML stands for?",
-    answers: [
-      {text:"Hyper Tech Markup Language",correct: false},
-      {text:"High Text Machine Language",correct: false},
-      {text:"HyperText Markup Language",correct: true}
-  ]
+    question: "What is 2 + 2?",
+    answers: ["3", "4", "5", "6"],
+    correct: "4"
   },
   {
-    question: "Which language runs in a web browser?",
-    answers: [
-      { text: "Java", correct: false },
-      { text: "C", correct: false },
-      { text: "Python", correct: false },
-      { text: "JavaScript", correct: true }
-    ]
+    question: "Capital of France?",
+    answers: ["London", "Berlin", "Paris", "Madrid"],
+    correct: "Paris"
+  },
+  {
+    question: "What color is the sky?",
+    answers: ["Green", "Blue", "Red", "Yellow"],
+    correct: "Blue"
+  },
+  {
+    question: "HTML stands for?",
+    answers: ["Hyper Tech Markup Language", "High Text Machine Language", "HyperText Markup Language", "None"],
+    correct: "HyperText Markup Language"
   }
 ];
 
-const questionContainer = document.getElementById("question-container");
-const answerButtons = document.getElementById("answer-buttons");
-const nextButton = document.getElementById("next-btn");
-const resultDisplay = document.getElementById("result");
-let shuffled Questions =[];
+let shuffledQuestions = [];
 let currentQuestionIndex = 0;
 let score = 0;
+let timer;
+let timeLeft = 30;
+
+const questionContainer = document.getElementById('question-container');
+const answerButtons = document.getElementById('answer-buttons');
+const nextButton = document.getElementById('next-btn');
+const resultDisplay = document.getElementById('result');
+[12/29, 6:08 AM] Chatgpt: const timerDisplay = document.getElementById('timer');
 
 function startQuiz() {
-  shuffledQuestion = question.sort(()=>math.random()-0.5);
+  shuffledQuestions = questions.sort(() => Math.random() - 0.5);
   currentQuestionIndex = 0;
   score = 0;
-  nextButton.style.display = "none";
+  resultDisplay.textContent = '';
+  nextButton.style.display = 'none';
+  startTimer();
   showQuestion();
+}
+
+function startTimer() {
+  timeLeft = 30;
+  timerDisplay.textContent = `Time: timeLeft`;
+  timer = setInterval(() => 
+    timeLeft–;
+    timerDisplay.textContent = `Time:{timeLeft}`;
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      showResult("Time's up!");
+    }
+  }, 1000);
 }
 
 function showQuestion() {
   resetState();
-  const question=shuffledQuestions[currentQuestionIndex];
-  questionContainer.textContent=question.question;
+  const question = shuffledQuestions[currentQuestionIndex];
+  questionContainer.textContent = question.question;
 
-question.answers.forEach(answer => {
+  question.answers.forEach(answer => {
     const li = document.createElement('li');
     li.textContent = answer;
     li.addEventListener('click', () => selectAnswer(li, question.correct));
