@@ -1,108 +1,100 @@
-This is the JavaScript code 
+
 const questions = [
   {
-    question: "What is 2 + 2?",
-    answers: ["3", "4", "5", "6"],
-    correct: "4"
+    question: "What is the capital of France?",
+    answers: [
+      { text: "Paris", correct: true },
+      { text: "London", correct: false },
+      { text: "Berlin", correct: false },
+      { text: "Madrid", correct: false }
+    ]
   },
   {
-    question: "Capital of France?",
-    answers: ["London", "Berlin", "Paris", "Madrid"],
-    correct: "Paris"
-  },
-  {
-    question: "What color is the sky?",
-    answers: ["Green", "Blue", "Red", "Yellow"],
-    correct: "Blue"
-  },
-  {
-    question: "HTML stands for?",
-    answers: ["Hyper Tech Markup Language", "High Text Machine Language", "HyperText Markup Language", "None"],
-    correct: "HyperText Markup Language"
+    question: "Which language runs in a web browser?",
+    answers: [
+      { text: "Java", correct: false },
+      { text: "C", correct: false },
+      { text: "Python", correct: false },
+      { text: "JavaScript", correct: true }
+    ]
   }
 ];
 
-let shuffledQuestions = [];
+const questionContainer = document.getElementById("question-container");
+const answerButtons = document.getElementById("answer-buttons");
+const nextButton = document.getElementById("next-btn");
+const result = document.getElementById("result");
+
 let currentQuestionIndex = 0;
 let score = 0;
-let timer;
-let timeLeft = 30;
-
-const questionContainer = document.getElementById('question-container');
-const answerButtons = document.getElementById('answer-buttons');
-const nextButton = document.getElementById('next-btn');
-const resultDisplay = document.getElementById('result');
-[12/29, 6:08 AM] Chatgpt: const timerDisplay = document.getElementById('timer');
 
 function startQuiz() {
-  shuffledQuestions = questions.sort(() => Math.random() - 0.5);
   currentQuestionIndex = 0;
   score = 0;
-  resultDisplay.textContent = '';
-  nextButton.style.display = 'none';
-  startTimer();
+  nextButton.style.display = "none";
+  result.innerHTML = "";
   showQuestion();
 }
 
-
-
 function showQuestion() {
   resetState();
-  const question = shuffledQuestions[currentQuestionIndex];
-  questionContainer.textContent = question.question;
+  const currentQuestion = questions[currentQuestionIndex];
+  const questionElement = document.createElement("h2");
+  questionElement.innerText = currentQuestion.question;
+  questionContainer.innerHTML = "";
+  questionContainer.appendChild(questionElement);
 
-  question.answers.forEach(answer => {
-    const li = document.createElement('li');
-    li.textContent = answer;
-    li.addEventListener('click', () => selectAnswer(li, question.correct));
-    answerButtons.appendChild(li);
+  currentQuestion.answers.forEach(answer => {
+    const button = document.createElement("li");
+    button.innerText = answer.text;
+    button.classList.add("answer-btn");
+    button.addEventListener("click", () => selectAnswer(button, answer.correct));
+    answerButtons.appendChild(button);
   });
 }
 
 function resetState() {
-  nextButton.style.display = 'none';
-  answerButtons.innerHTML = '';
+  nextButton.style.display = "none";
+  answerButtons.innerHTML = "";
+  result.innerHTML = "";
 }
 
-function selectAnswer(selected, correctAnswer) {
-  const options = answerButtons.children;
-  Array.from(options).forEach(option => {
-    option.classList.remove('correct', 'wrong');
-    if (option.textContent === correctAnswer) {
-[12/29, 6:08 AM] Chatgpt: option.classList.add('correct');
-    } else {
-      option.classList.add('wrong');
-    }
-    option.style.pointerEvents = 'none';
-  });
-
-  if (selected.textContent === correctAnswer) {
+function selectAnswer(button, correct) {
+  if (correct) {
     score++;
+    button.classList.add("correct");
+  } else {
+    button.classList.add("wrong");
   }
-
-  clearInterval(timer);
-  nextButton.style.display = 'inline';
+  Array.from(answerButtons.children).forEach(btn => {
+    btn.removeEventListener("click", () => {});
+    btn.disabled = true;
+  });
+  nextButton.style.display = "inline-block";
 }
 
-nextButton.addEventListener('click', () => {
+nextButton.addEventListener("click", () => {
   currentQuestionIndex++;
-  if (currentQuestionIndex < shuffledQuestions.length) {
-    startTimer();
+  if (currentQuestionIndex < questions.length) {
     showQuestion();
   } else {
-    showFinalResult();
+    showResult();
   }
 });
 
-function showResult(message) {
-  questionContainer.textContent = '';
-  answerButtons.innerHTML = '';
-  nextButton.style.display = 'none';
-  resultDisplay.textContent = message + ` Your Score: score/{questions.length}`;
-}
-
-function showFinalResult() {
-  showResult("Quiz Completed!");
+function showResult() {
+  questionContainer.innerHTML = "";
+  answerButtons.innerHTML = "";
+  nextButton.style.display = "none";
+  result.innerHTML = `
+    <p>Thank you for participating in the quiz!</p>
+    <p>Your score: score /{questions.length}</p>
+    <button id="end-btn">End Quiz</button>
+  `;
+  document.getElementById("end-btn").addEventListener("click", () => {
+    location.reload();
+  });
 }
 
 startQuiz();
+
