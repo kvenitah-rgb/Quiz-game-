@@ -4,6 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Quiz App</title>
+  </head>
+<body>
+  <div class="quiz-container">
+    <h1>Quiz App</h1>
+    <div id="question-container"></div>
+    <ul id="answer-buttons"></ul>
+    <button id="next-btn">Next</button>
+    <div id="result"></div>
+  </div>
+</body>
+</html>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -80,15 +91,7 @@
       text-align: center;
     }
   </style>
-</head>
-<body>
-  <div class="quiz-container">
-    <h1>Quiz App</h1>
-    <div id="question-container"></div>
-    <ul id="answer-buttons"></ul>
-    <button id="next-btn">Next</button>
-    <div id="result"></div>
-  </div>
+
 
   <script>
    let shuffledQuestions = [];
@@ -167,5 +170,3 @@ function showFinalResult() {
 }
 startQuiz();
   </script>
-</body>
-</html>
