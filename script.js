@@ -25,8 +25,7 @@ const questions = [
 let shuffledQuestions = [];
 let currentQuestionIndex = 0;
 let score = 0;
-let timer;
-let timeLeft = 30;
+
 
 const questionContainer = document.getElementById('question-container');
 const answerButtons = document.getElementById('answer-buttons');
@@ -40,21 +39,10 @@ function startQuiz() {
   score = 0;
   resultDisplay.textContent = '';
   nextButton.style.display = 'none';
-  startTimer();
+ 
   showQuestion();
 }
 
-function startTimer() {
-  timeLeft = 30;
-  timerDisplay.textContent = `Time: timeLeft`;
-  timer = setInterval(() => 
-    timeLeft–;
-    timerDisplay.textContent = `Time:{timeLeft}`;
-    if (timeLeft <= 0) {
-      clearInterval(timer);
-      showResult("Time's up!");
-    }
-  }, 1000);
 }
 
 function showQuestion() {
