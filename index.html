@@ -97,8 +97,8 @@ h1 {
 </div>
 
 <script>
+/* ---------------- QUESTIONS ---------------- */
 const questions = [
-  // -------- TECHNOLOGY (20) --------
   { question: "What does CPU stand for?", answers: [
     { text: "Central Processing Unit", correct: true },
     { text: "Computer Processing Unit", correct: false },
@@ -123,167 +123,27 @@ const questions = [
     { text: "Rapid Access Machine", correct: false },
     { text: "Run Access Memory", correct: false }
   ]},
-  { question: "Which is an operating system?", answers: [
-    { text: "Windows", correct: true },
-    { text: "HTML", correct: false },
-    { text: "Google Chrome", correct: false },
-    { text: "Microsoft Word", correct: false }
-  ]},
-  { question: "What does URL stand for?", answers: [
-    { text: "Uniform Resource Locator", correct: true },
-    { text: "Universal Record Link", correct: false },
-    { text: "Uniform Reference Link", correct: false },
-    { text: "Universal Resource List", correct: false }
-  ]},
-  { question: "Which is a DBMS?", answers: [
-    { text: "MySQL", correct: true },
-    { text: "HTML", correct: false },
-    { text: "CSS", correct: false },
-    { text: "JavaScript", correct: false }
-  ]},
-  { question: "What is the purpose of a firewall?", answers: [
-    { text: "Block unauthorized access", correct: true },
-    { text: "Speed up computer", correct: false },
-    { text: "Store files", correct: false },
-    { text: "Create backups", correct: false }
-  ]},
-  { question: "Which is NOT a programming language?", answers: [
-    { text: "HTTP", correct: true },
-    { text: "Python", correct: false },
-    { text: "Java", correct: false },
-    { text: "HTML", correct: false }
-  ]},
-  { question: "What does ICT stand for?", answers: [
-    { text: "Information and Communication Technology", correct: true },
-    { text: "Internet Computer Tools", correct: false },
-    { text: "Information Control Tech", correct: false },
-    { text: "Integrated Communication Tools", correct: false }
-  ]},
-  { question: "Which device connects to the internet?", answers: [
-    { text: "Router", correct: true },
-    { text: "Joystick", correct: false },
-    { text: "Projector", correct: false },
-    { text: "Scanner", correct: false }
-  ]},
-  { question: "What is phishing?", answers: [
-    { text: "Stealing information via fake messages", correct: true },
-    { text: "Software update", correct: false },
-    { text: "Programming language", correct: false },
-    { text: "Database system", correct: false }
-  ]},
-  { question: "Largest storage device?", answers: [
-    { text: "Hard Disk", correct: true },
-    { text: "CD", correct: false },
-    { text: "DVD", correct: false },
-    { text: "Floppy Disk", correct: false }
-  ]},
-  { question: "HTML stands for?", answers: [
-    { text: "Hyper Text Markup Language", correct: true },
-    { text: "Home Tool Markup Language", correct: false },
-    { text: "Hyperlink Text Machine Language", correct: false },
-    { text: "High Transfer Language", correct: false }
-  ]},
-  { question: "Example of cloud storage?", answers: [
-    { text: "Google Drive", correct: true },
-    { text: "DVD", correct: false },
-    { text: "Flash Disk", correct: false },
-    { text: "Hard Disk", correct: false }
-  ]},
-  { question: "Purpose of antivirus?", answers: [
-    { text: "Protect against malware", correct: true },
-    { text: "Design websites", correct: false },
-    { text: "Increase speed", correct: false },
-    { text: "Store data", correct: false }
-  ]},
-  { question: "Which is an output device?", answers: [
-    { text: "Monitor", correct: true },
-    { text: "Keyboard", correct: false },
-    { text: "Mouse", correct: false },
-    { text: "Scanner", correct: false }
-  ]},
-  { question: "What is a database?", answers: [
-    { text: "Collection of related data", correct: true },
-    { text: "Operating system", correct: false },
-    { text: "Virus", correct: false },
-    { text: "Computer program", correct: false }
-  ]},
-  { question: "Which secures websites?", answers: [
-    { text: "HTTPS", correct: true },
-    { text: "HTTP", correct: false },
-    { text: "FTP", correct: false },
-    { text: "IP", correct: false }
-  ]},
-  { question: "Artificial Intelligence is?", answers: [
-    { text: "Machines mimicking human intelligence", correct: true },
-    { text: "Storage device", correct: false },
-    { text: "Programming error", correct: false },
-    { text: "Hardware part", correct: false }
-  ]},
-
-  // -------- MARKETING & SALES (10) --------
   { question: "What is marketing?", answers: [
-    { text: "Promoting and selling products/services", correct: true },
+    { text: "Promoting and selling products or services", correct: true },
     { text: "Manufacturing goods", correct: false },
     { text: "Accounting process", correct: false },
     { text: "Data storage", correct: false }
   ]},
-  { question: "Marketing mix element?", answers: [
-    { text: "Product", correct: true },
-    { text: "Profit", correct: false },
-    { text: "People Management", correct: false },
-    { text: "Production Speed", correct: false }
-  ]},
   { question: "CRM stands for?", answers: [
     { text: "Customer Relationship Management", correct: true },
-    { text: "Client Revenue Model", correct: false },
-    { text: "Customer Record Machine", correct: false },
-    { text: "Customer Resource Monitor", correct: false }
+    { text: "Customer Revenue Model", correct: false },
+    { text: "Client Resource Machine", correct: false },
+    { text: "Customer Record Monitor", correct: false }
   ]},
-  { question: "Main goal of sales?", answers: [
-    { text: "Generate revenue & satisfy customers", correct: true },
-    { text: "Eliminate competition", correct: false },
-    { text: "Reduce interaction", correct: false },
-    { text: "Control employees", correct: false }
-  ]},
-  { question: "Online-focused marketing?", answers: [
-    { text: "Digital Marketing", correct: true },
-    { text: "Traditional Marketing", correct: false },
-    { text: "Outbound Marketing", correct: false },
-    { text: "Direct Selling", correct: false }
-  ]},
-  { question: "What is a target market?", answers: [
-    { text: "Specific group of intended customers", correct: true },
-    { text: "Everyone", correct: false },
-    { text: "Competitors", correct: false },
-    { text: "Government", correct: false }
-  ]},
-  { question: "Example of promotion?", answers: [
-    { text: "Advertising on social media", correct: true },
-    { text: "Manufacturing products", correct: false },
-    { text: "Pricing decisions", correct: false },
-    { text: "Payroll management", correct: false }
-  ]},
-  { question: "B2B means?", answers: [
-    { text: "Business to Business", correct: true },
-    { text: "Business to Buyer", correct: false },
-    { text: "Buyer to Business", correct: false },
-    { text: "Brand to Brand", correct: false }
-  ]},
-  { question: "What is branding?", answers: [
-    { text: "Creating unique identity for a brand", correct: true },
-    { text: "Selling at low price", correct: false },
-    { text: "Fast distribution", correct: false },
-    { text: "Writing code", correct: false }
-  ]},
-  { question: "Most important sales skill?", answers: [
-    { text: "Communication", correct: true },
-    { text: "Programming", correct: false },
-    { text: "Hardware repair", correct: false },
-    { text: "Graphic design", correct: false }
+  { question: "Which skill is most important in sales?", answers: [
+    { text: "Communication skills", correct: true },
+    { text: "Programming skills", correct: false },
+    { text: "Hardware skills", correct: false },
+    { text: "Design skills", correct: false }
   ]}
 ];
 
-// -------- QUIZ LOGIC --------
+/* ---------------- QUIZ LOGIC ---------------- */
 const questionContainer = document.getElementById("question-container");
 const answerButtons = document.getElementById("answer-buttons");
 const nextButton = document.getElementById("next-btn");
@@ -296,7 +156,7 @@ let score = 0;
 startQuiz();
 
 function startQuiz() {
-  shuffledQuestions = questions.sort(() => Math.random() - 0.5);
+  shuffledQuestions = [...questions].sort(() => Math.random() - 0.5);
   currentQuestionIndex = 0;
   score = 0;
   showQuestion();
@@ -304,14 +164,19 @@ function startQuiz() {
 
 function showQuestion() {
   resetState();
-  const q = shuffledQuestions[currentQuestionIndex];
-  questionContainer.innerText = q.question;
 
-  q.answers.forEach(a => {
+  const currentQuestion = shuffledQuestions[currentQuestionIndex];
+  questionContainer.innerText = currentQuestion.question;
+
+  // 🔥 SHUFFLE ANSWERS HERE (FIX)
+  const shuffledAnswers = [...currentQuestion.answers]
+    .sort(() => Math.random() - 0.5);
+
+  shuffledAnswers.forEach(answer => {
     const li = document.createElement("li");
-    li.innerText = a.text;
-    li.dataset.correct = a.correct;
-    li.onclick = selectAnswer;
+    li.innerText = answer.text;
+    li.dataset.correct = answer.correct;
+    li.addEventListener("click", selectAnswer);
     answerButtons.appendChild(li);
   });
 }
@@ -324,22 +189,28 @@ function resetState() {
 
 function selectAnswer(e) {
   const selected = e.target;
-  const correct = selected.dataset.correct === "true";
+  const isCorrect = selected.dataset.correct === "true";
 
-  if (correct) score++;
+  if (isCorrect) score++;
 
   Array.from(answerButtons.children).forEach(btn => {
-    btn.classList.add(btn.dataset.correct === "true" ? "correct" : "wrong");
+    btn.classList.add(
+      btn.dataset.correct === "true" ? "correct" : "wrong"
+    );
     btn.style.pointerEvents = "none";
   });
 
   nextButton.style.display = "block";
 }
 
-nextButton.onclick = () => {
+nextButton.addEventListener("click", () => {
   currentQuestionIndex++;
-  currentQuestionIndex < shuffledQuestions.length ? showQuestion() : showResult();
-};
+  if (currentQuestionIndex < shuffledQuestions.length) {
+    showQuestion();
+  } else {
+    showResult();
+  }
+});
 
 function showResult() {
   resetState();
@@ -358,8 +229,11 @@ function showResult() {
   endBtn.id = "end-btn";
   endBtn.style.display = "block";
   endBtn.innerText = "End Quiz";
+
   endBtn.onclick = () => {
-    if (confirm("Do you want to try again?")) location.reload();
+    if (confirm("Do you want to try again?")) {
+      location.reload();
+    }
   };
 
   result.appendChild(endBtn);
