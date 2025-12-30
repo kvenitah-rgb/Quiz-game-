@@ -67,7 +67,7 @@ h1 { text-align: center; }
 </div>
 
 <script>
-/* ---------------- ALL 30 QUESTIONS (MIXED ANSWERS) ---------------- */
+/* -------- ALL 30 QUESTIONS (UNCHANGED) -------- */
 const questions = [
   { question: "What does CPU stand for?", answers: [
     { text: "Central Program Utility", correct: false },
@@ -130,7 +130,7 @@ const questions = [
     { text: "Scanner", correct: false }
   ]},
 
-  /* ---- MARKETING & SALES (10) ---- */
+  /* MARKETING & SALES (10) */
   { question: "What is marketing?", answers: [
     { text: "Accounting process", correct: false },
     { text: "Promoting and selling products or services", correct: true },
@@ -193,20 +193,23 @@ const questions = [
   ]}
 ];
 
-/* ---------------- QUIZ LOGIC ---------------- */
+/* -------- QUIZ LOGIC (ONLY 10 QUESTIONS SHOWN) -------- */
 const questionContainer = document.getElementById("question-container");
 const answerButtons = document.getElementById("answer-buttons");
 const nextButton = document.getElementById("next-btn");
 const result = document.getElementById("result");
 
-let shuffledQuestions = [];
+let quizQuestions = [];
 let currentIndex = 0;
 let score = 0;
 
 startQuiz();
 
 function startQuiz() {
-  shuffledQuestions = [...questions].sort(() => Math.random() - 0.5);
+  quizQuestions = [...questions]
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 10);   // ⭐ LIMIT TO 10 QUESTIONS
+
   currentIndex = 0;
   score = 0;
   showQuestion();
@@ -214,8 +217,8 @@ function startQuiz() {
 
 function showQuestion() {
   resetState();
-  const q = shuffledQuestions[currentIndex];
-  questionContainer.textContent = q.question;
+  const q = quizQuestions[currentIndex];
+  questionContainer.textContent = `Question ${currentIndex + 1} of 10: ${q.question}`;
 
   [...q.answers].sort(() => Math.random() - 0.5).forEach(a => {
     const li = document.createElement("li");
@@ -246,14 +249,14 @@ function selectAnswer(e) {
 
 nextButton.onclick = () => {
   currentIndex++;
-  currentIndex < shuffledQuestions.length ? showQuestion() : showResult();
+  currentIndex < quizQuestions.length ? showQuestion() : showResult();
 };
 
 function showResult() {
   resetState();
   questionContainer.innerHTML = `
     <p>Thank you for participating in the quiz!</p>
-    <p>Your final score is <strong>${score} / ${shuffledQuestions.length}</strong></p>
+    <p>Your final score is <strong>${score} / 10</strong></p>
     ${score === 0 ? "<p style='color:#ffcccc;'>You failed the quiz.</p>" : ""}
   `;
 
