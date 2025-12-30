@@ -22,6 +22,12 @@ h1 {
   color: #800000;
 }
 
+#timer {
+  text-align: right;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #800000;
+}
 
 #answer-buttons {
   list-style: none;
@@ -59,36 +65,18 @@ h1 {
   padding: 10px 20px;
   background-color: #800000;
   color: white;
-  border: none;    
+  border: none;border-radius: 5px;
+  cursor: pointer;
+  display: none;
 }
 
-
-#options {
-    margin: 10px 0;
+#next-btn:hover {
+  background-color: #a00000;
 }
 
-button {
-    padding: 5px 2px;
-    margin: 10px;
-    cursor: pointer;
-}
 #result {
   margin-top: 20px;
-  padding: 10px;
-  background-color: #f8e6e6;
-  color: #800000;
-  border: 1px solid #800000;
-  border-radius: 5px;
+  font-weight: bold;
   text-align: center;
-  max-width: 90%;
-  font-size: 14px; /* smaller text */
-  line-height: 1.4;
-  word-wrap: break-word;
-  margin-left: auto;
-  margin-right: auto;
+  color: #800000;
 }
-
-
-
-
-
