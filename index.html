@@ -168,41 +168,48 @@
       });
     }
     function resetState() {
-  nextButton.style.display = 'none';
-  answerButtons.innerHTML = '';
-}
-
-function selectAnswer(selected, correctAnswer) {
-  const options = answerButtons.children;
-  Array.from(options).forEach(option => {
-    option.classList.remove('correct', 'wrong');
-    if (option.textContent === correctAnswer) {
-[12/29, 6:08 AM] Chatgpt: option.classList.add('correct');
-    } else {
-      option.classList.add('wrong');
+      nextButton.style.display = 'none';
+      result.innerText = '';
+      while (answerButtons.firstChild) {
+        answerButtons.removeChild(answerButtons.firstChild);
+      }
     }
-    option.style.pointerEvents = 'none';
-  });
 
-  if (selected.textContent === correctAnswer) {
-    score++;
-  }
 
-  clearInterval(timer);
-  nextButton.style.display = 'inline';
 }
 
-nextButton.addEventListener('click', () => {
-  currentQuestionIndex++;
-  if (currentQuestionIndex < shuffledQuestions.length) {
-    startTimer();
-    showQuestion();
-  } else {
-    showFinalResult();
-  }
-});
+ function selectAnswer(e) {
+      const selectedBtn = e.target;
+      const correct = selectedBtn.dataset.correct === "true";
 
-function showResult(message) {
+      if (correct) {
+        score++;
+        result.innerText = "Correct!";
+      } else {
+        result.innerText = "Wrong!";
+      }
+
+      // Set colors
+      Array.from(answerButtons.children).forEach(button => {
+        if (button.dataset.correct === "true") {
+          button.classList.add('correct');
+        } else {
+          button.classList.add('wrong');
+        }
+        // Disable all buttons after an answer is chosen
+[12/29, 12:20 PM] Chatgpt: button.removeEventListener('click', selectAnswer);
+      });
+   nextButton.style.display = 'inline-block';
+    }
+    nextButton.addEventListener('click', () => {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) {
+        showQuestion();
+      } else {
+        showResult();
+      }
+    });
+  function showResult(message) {
   questionContainer.textContent = '';
   answerButtons.innerHTML = '';
   nextButton.style.display = 'none';
@@ -214,8 +221,6 @@ function showFinalResult() {
 }
 
 startQuiz();
-    // Initialize quiz on page load
-    startQuiz();
   </script>
 </body>
 </html>
