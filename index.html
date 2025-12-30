@@ -1,10 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Quiz App</title>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -13,6 +13,7 @@
       justify-content: center;
       padding: 20px;
     }
+
     .quiz-container {
       background: #800000;
       color: white;
@@ -21,18 +22,22 @@
       width: 400px;
       box-shadow: 0 0 10px #400000;
     }
+
     h1 {
       text-align: center;
       margin-bottom: 15px;
     }
+
     #question-container {
       font-size: 1.2rem;
       margin-bottom: 15px;
     }
+
     #answer-buttons {
       list-style: none;
       padding: 0;
     }
+
     #answer-buttons li {
       background: white;
       color: #800000;
@@ -40,22 +45,26 @@
       padding: 10px;
       border-radius: 5px;
       cursor: pointer;
-      transition: background 0.3s;
       user-select: none;
     }
+
     #answer-buttons li:hover {
       background: #b04c4c;
       color: white;
     }
+
     #answer-buttons li.correct {
-      background: #c8e6c9;color: #2e7d32;
+      background: #c8e6c9;
+      color: #2e7d32;
       cursor: default;
     }
+
     #answer-buttons li.wrong {
       background: #ffcdd2;
       color: #c62828;
       cursor: default;
     }
+
     #next-btn, #end-btn {
       margin-top: 15px;
       padding: 10px 20px;
@@ -66,21 +75,22 @@
       cursor: pointer;
       font-weight: bold;
       display: none;
-      user-select: none;
     }
+
     #next-btn:hover, #end-btn:hover {
       background: #b04c4c;
       color: white;
     }
+
     #result {
       margin-top: 15px;
       font-weight: bold;
       font-size: 1.1rem;
-      min-height: 24px;
       text-align: center;
     }
   </style>
 </head>
+
 <body>
   <div class="quiz-container">
     <h1>Quiz App</h1>
@@ -90,8 +100,8 @@
     <div id="result"></div>
   </div>
 
-  <script>
-    const questions = [
+<script>
+const questions = [
   {
     question: "What is the capital of France?",
     answers: [
@@ -120,54 +130,52 @@ const result = document.getElementById("result");
 let currentQuestionIndex = 0;
 let score = 0;
 
+startQuiz();
+
 function startQuiz() {
   currentQuestionIndex = 0;
   score = 0;
   result.innerHTML = "";
-  nextButton.innerText = "Next";
+  nextButton.style.display = "none";
   showQuestion();
 }
 
 function showQuestion() {
   resetState();
-
   const currentQuestion = questions[currentQuestionIndex];
-   questionContainer.innerText = currentQuestion.question;
+  questionContainer.innerText = currentQuestion.question;
 
   currentQuestion.answers.forEach(answer => {
     const li = document.createElement("li");
     li.innerText = answer.text;
-    li.classList.add("btn");
-    if (answer.correct) {
-      li.dataset.correct = answer.correct;
-    }
+    li.dataset.correct = answer.correct;
     li.addEventListener("click", selectAnswer);
     answerButtons.appendChild(li);
   });
 }
 
 function resetState() {
-  nextButton.style.display = "none";
   answerButtons.innerHTML = "";
   result.innerHTML = "";
+  nextButton.style.display = "none";
 }
 
 function selectAnswer(e) {
-  const selectedBtn = e.target;
-  const correct = selectedBtn.dataset.correct === "true";
+  const selected = e.target;
+  const isCorrect = selected.dataset.correct === "true";
 
-  if (correct) {
-    selectedBtn.classList.add("correct");
+  if (isCorrect) {
+    selected.classList.add("correct");
     score++;
   } else {
-    selectedBtn.classList.add("wrong");
+    selected.classList.add("wrong");
   }
 
-  Array.from(answerButtons.children).forEach(btn => {
-    if (btn.dataset.correct === "true") {
-      btn.classList.add("correct");
+  Array.from(answerButtons.children).forEach(button => {
+    if (button.dataset.correct === "true") {
+      button.classList.add("correct");
     }
-    btn.disabled = true;
+    button.style.pointerEvents = "none";
   });
 
   nextButton.style.display = "block";
@@ -184,31 +192,25 @@ nextButton.addEventListener("click", () => {
 
 function showResult() {
   resetState();
-  questionContainer.innerText = "";
-  result.innerHTML = `
-    <p>Thank you for participating in the quiz!</p>
-    <p>Your score: score /{questions.length}</p>
+  questionContainer.innerHTML = `
+    Thank you for participating in the quiz!<br><br>
+    Your final score is <strong>${score} / ${questions.length}</strong>
   `;
 
-  const endBtn = document.createElement('button');
-  endBtn.textContent = "End Quiz";
+  const endBtn = document.createElement("button");
   endBtn.id = "end-btn";
-  endBtn.style.marginTop = "15px";
-  endBtn.style.padding = "10px 20px";
-  endBtn.style.backgroundColor = "maroon";
-  endBtn.style.color = "#fff";
-  endBtn.style.border = "none";
-  endBtn.style.borderRadius = "5px";
-  endBtn.style.cursor = "pointer";
-  endBtn.onclick = () => location.reload();
+  endBtn.innerText = "End Quiz";
+  endBtn.style.display = "block";
+
+  endBtn.onclick = () => {
+    const retry = confirm("Do you want to try the quiz again?");
+    if (retry) {
+      location.reload();
+    }
+  };
+
   result.appendChild(endBtn);
 }
-
-startQuiz();
-
-
-
-  </script>
+</script>
 </body>
 </html>
-
