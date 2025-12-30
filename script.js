@@ -1,5 +1,61 @@
 
-const questions = [
+    const questions = [
+      {
+        question: "What is the capital of France?",
+        answers: [
+          { text: "Paris", correct: true },
+          { text: "London", correct: false },
+          { text: "Berlin", correct: false },
+          { text: "Madrid", correct: false }
+        ]
+      },
+      {
+        question: "Which language runs in a web browser?",
+        answers: [
+[12/29, 12:20 PM] Chatgpt: { text: "Java", correct: false },
+          { text: "C", correct: false },
+          { text: "Python", correct: false },
+          { text: "JavaScript", correct: true }
+        ]
+      },
+      {
+        question: "What does CSS stand for?",
+        answers: [
+          { text: "Central Style Sheets", correct: false },
+          { text: "Cascading Style Sheets", correct: true },
+          { text: "Cascading Simple Sheets", correct: false },
+          { text: "Cars SUVs Sailboats", correct: false }
+        ]
+      }
+    ];
+
+    const questionContainer = document.getElementById('question-container');
+    const answerButtons = document.getElementById('answer-buttons');
+    const nextButton = document.getElementById('next-btn');
+    const result = document.getElementById('result');
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    function startQuiz() {
+      currentQuestionIndex = 0;
+      score = 0;
+      nextButton.style.display = 'none';
+      result.innerText = '';
+      showQuestion();
+    }
+
+    function showQuestion() {
+      resetState();
+      const currentQuestion = questions[currentQuestionIndex];
+      questionContainer.innerText = currentQuestion.question;
+
+      // Shuffle answers for each question
+[12/29, 12:20 PM] Chatgpt: const shuffledAnswers = currentQuestion.answers.sort(() => Math.random() - 0.5);
+
+      shuffledAnswers.forEach(answer => {
+      …
+[8:18 AM, 12/30/2025] Vennie🩵🩵: const questions = [
   {
     question: "What is 2 + 2?",
     answers: ["3", "4", "5", "6"],
@@ -25,7 +81,8 @@ const questions = [
 let shuffledQuestions = [];
 let currentQuestionIndex = 0;
 let score = 0;
-
+let timer;
+let timeLeft = 30;
 
 const questionContainer = document.getElementById('question-container');
 const answerButtons = document.getElementById('answer-buttons');
@@ -39,10 +96,21 @@ function startQuiz() {
   score = 0;
   resultDisplay.textContent = '';
   nextButton.style.display = 'none';
- 
+  startTimer();
   showQuestion();
 }
 
+function startTimer() {
+  timeLeft = 30;
+  timerDisplay.textContent = Time: timeLeft;
+  timer = setInterval(() => 
+    timeLeft–;
+    timerDisplay.textContent = Time:{timeLeft};
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      showResult("Time's up!");
+    }
+  }, 1000);
 }
 
 function showQuestion() {
