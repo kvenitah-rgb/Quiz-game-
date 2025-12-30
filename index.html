@@ -13,30 +13,22 @@ body {
   justify-content: center;
   padding: 20px;
 }
-
 .quiz-container {
   background: #800000;
   color: white;
   padding: 20px;
   border-radius: 10px;
-  width: 400px;
-  box-shadow: 0 0 10px #400000;
+  width: 420px;
 }
-
-h1 {
-  text-align: center;
-}
-
+h1 { text-align: center; }
 #question-container {
   font-size: 1.2rem;
   margin-bottom: 15px;
 }
-
 #answer-buttons {
   list-style: none;
   padding: 0;
 }
-
 #answer-buttons li {
   background: white;
   color: #800000;
@@ -44,24 +36,13 @@ h1 {
   padding: 10px;
   border-radius: 5px;
   cursor: pointer;
-  user-select: none;
 }
-
 #answer-buttons li:hover {
   background: #b04c4c;
   color: white;
 }
-
-#answer-buttons li.correct {
-  background: #c8e6c9;
-  color: #2e7d32;
-}
-
-#answer-buttons li.wrong {
-  background: #ffcdd2;
-  color: #c62828;
-}
-
+.correct { background: #c8e6c9 !important; color: #2e7d32; }
+.wrong { background: #ffcdd2 !important; color: #c62828; }
 #next-btn, #end-btn {
   margin-top: 15px;
   padding: 10px 20px;
@@ -70,20 +51,9 @@ h1 {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-weight: bold;
   display: none;
 }
-
-#next-btn:hover, #end-btn:hover {
-  background: #b04c4c;
-  color: white;
-}
-
-#result {
-  margin-top: 15px;
-  text-align: center;
-  font-weight: bold;
-}
+#result { text-align: center; font-weight: bold; }
 </style>
 </head>
 
@@ -97,49 +67,129 @@ h1 {
 </div>
 
 <script>
-/* ---------------- QUESTIONS ---------------- */
+/* ---------------- ALL 30 QUESTIONS (MIXED ANSWERS) ---------------- */
 const questions = [
   { question: "What does CPU stand for?", answers: [
+    { text: "Central Program Utility", correct: false },
     { text: "Central Processing Unit", correct: true },
     { text: "Computer Processing Unit", correct: false },
-    { text: "Central Program Utility", correct: false },
     { text: "Control Processing Unit", correct: false }
   ]},
-  { question: "Which device inputs text into a computer?", answers: [
-    { text: "Keyboard", correct: true },
-    { text: "Monitor", correct: false },
-    { text: "Printer", correct: false },
-    { text: "Speaker", correct: false }
-  ]},
   { question: "Which language runs in a web browser?", answers: [
-    { text: "JavaScript", correct: true },
     { text: "Python", correct: false },
-    { text: "C", correct: false },
-    { text: "Java", correct: false }
+    { text: "JavaScript", correct: true },
+    { text: "Java", correct: false },
+    { text: "C", correct: false }
   ]},
   { question: "What does RAM stand for?", answers: [
+    { text: "Rapid Access Machine", correct: false },
     { text: "Random Access Memory", correct: true },
     { text: "Read Access Memory", correct: false },
-    { text: "Rapid Access Machine", correct: false },
     { text: "Run Access Memory", correct: false }
   ]},
+  { question: "Which is an operating system?", answers: [
+    { text: "Google Chrome", correct: false },
+    { text: "Windows", correct: true },
+    { text: "HTML", correct: false },
+    { text: "Microsoft Word", correct: false }
+  ]},
+  { question: "What does URL stand for?", answers: [
+    { text: "Universal Resource List", correct: false },
+    { text: "Uniform Resource Locator", correct: true },
+    { text: "Uniform Reference Link", correct: false },
+    { text: "Universal Record Link", correct: false }
+  ]},
+  { question: "Which device connects a computer to the internet?", answers: [
+    { text: "Scanner", correct: false },
+    { text: "Router", correct: true },
+    { text: "Projector", correct: false },
+    { text: "Joystick", correct: false }
+  ]},
+  { question: "What is phishing?", answers: [
+    { text: "Programming language", correct: false },
+    { text: "Stealing information through fake messages", correct: true },
+    { text: "Software update", correct: false },
+    { text: "Database system", correct: false }
+  ]},
+  { question: "Which is NOT a programming language?", answers: [
+    { text: "Python", correct: false },
+    { text: "HTTP", correct: true },
+    { text: "Java", correct: false },
+    { text: "HTML", correct: false }
+  ]},
+  { question: "What does HTML stand for?", answers: [
+    { text: "Hyperlink Text Machine Language", correct: false },
+    { text: "Hyper Text Markup Language", correct: true },
+    { text: "Home Tool Markup Language", correct: false },
+    { text: "High Transfer Language", correct: false }
+  ]},
+  { question: "Which is an output device?", answers: [
+    { text: "Keyboard", correct: false },
+    { text: "Monitor", correct: true },
+    { text: "Mouse", correct: false },
+    { text: "Scanner", correct: false }
+  ]},
+
+  /* ---- MARKETING & SALES (10) ---- */
   { question: "What is marketing?", answers: [
+    { text: "Accounting process", correct: false },
     { text: "Promoting and selling products or services", correct: true },
     { text: "Manufacturing goods", correct: false },
-    { text: "Accounting process", correct: false },
     { text: "Data storage", correct: false }
   ]},
+  { question: "Which is part of the marketing mix?", answers: [
+    { text: "Profit", correct: false },
+    { text: "Product", correct: true },
+    { text: "People management", correct: false },
+    { text: "Production speed", correct: false }
+  ]},
   { question: "CRM stands for?", answers: [
-    { text: "Customer Relationship Management", correct: true },
     { text: "Customer Revenue Model", correct: false },
+    { text: "Customer Relationship Management", correct: true },
     { text: "Client Resource Machine", correct: false },
     { text: "Customer Record Monitor", correct: false }
   ]},
-  { question: "Which skill is most important in sales?", answers: [
-    { text: "Communication skills", correct: true },
-    { text: "Programming skills", correct: false },
-    { text: "Hardware skills", correct: false },
-    { text: "Design skills", correct: false }
+  { question: "Main goal of sales?", answers: [
+    { text: "Reduce interaction", correct: false },
+    { text: "Generate revenue and satisfy customers", correct: true },
+    { text: "Eliminate competition", correct: false },
+    { text: "Control employees", correct: false }
+  ]},
+  { question: "What is a target market?", answers: [
+    { text: "Competitors", correct: false },
+    { text: "Specific group of customers", correct: true },
+    { text: "Everyone", correct: false },
+    { text: "Government", correct: false }
+  ]},
+  { question: "What does B2B mean?", answers: [
+    { text: "Buyer to Business", correct: false },
+    { text: "Business to Business", correct: true },
+    { text: "Brand to Brand", correct: false },
+    { text: "Business to Buyer", correct: false }
+  ]},
+  { question: "Example of promotion?", answers: [
+    { text: "Manufacturing goods", correct: false },
+    { text: "Advertising on social media", correct: true },
+    { text: "Payroll management", correct: false },
+    { text: "Pricing products", correct: false }
+  ]},
+  { question: "Most important sales skill?", answers: [
+    { text: "Programming", correct: false },
+    { text: "Communication", correct: true },
+    { text: "Hardware repair", correct: false },
+    { text: "Graphic design", correct: false }
+  ]},
+  { question: "What is branding?", answers: [
+    { text: "Selling cheaply", correct: false },
+    { text: "Creating a unique identity", correct: true },
+    { text: "Fast delivery", correct: false },
+    { text: "Writing software", correct: false }
+  ]},
+  { question: "Digital marketing focuses on?", answers: [
+    { text: "Radio only", correct: false },
+    { text: "Online platforms", correct: true },
+    { text: "Print media", correct: false },
+    { text: "Door-to-door sales", correct: false }
   ]}
 ];
 
@@ -150,33 +200,28 @@ const nextButton = document.getElementById("next-btn");
 const result = document.getElementById("result");
 
 let shuffledQuestions = [];
-let currentQuestionIndex = 0;
+let currentIndex = 0;
 let score = 0;
 
 startQuiz();
 
 function startQuiz() {
   shuffledQuestions = [...questions].sort(() => Math.random() - 0.5);
-  currentQuestionIndex = 0;
+  currentIndex = 0;
   score = 0;
   showQuestion();
 }
 
 function showQuestion() {
   resetState();
+  const q = shuffledQuestions[currentIndex];
+  questionContainer.textContent = q.question;
 
-  const currentQuestion = shuffledQuestions[currentQuestionIndex];
-  questionContainer.innerText = currentQuestion.question;
-
-  // 🔥 SHUFFLE ANSWERS HERE (FIX)
-  const shuffledAnswers = [...currentQuestion.answers]
-    .sort(() => Math.random() - 0.5);
-
-  shuffledAnswers.forEach(answer => {
+  [...q.answers].sort(() => Math.random() - 0.5).forEach(a => {
     const li = document.createElement("li");
-    li.innerText = answer.text;
-    li.dataset.correct = answer.correct;
-    li.addEventListener("click", selectAnswer);
+    li.textContent = a.text;
+    li.dataset.correct = a.correct;
+    li.onclick = selectAnswer;
     answerButtons.appendChild(li);
   });
 }
@@ -188,54 +233,37 @@ function resetState() {
 }
 
 function selectAnswer(e) {
-  const selected = e.target;
-  const isCorrect = selected.dataset.correct === "true";
+  const correct = e.target.dataset.correct === "true";
+  if (correct) score++;
 
-  if (isCorrect) score++;
-
-  Array.from(answerButtons.children).forEach(btn => {
-    btn.classList.add(
-      btn.dataset.correct === "true" ? "correct" : "wrong"
-    );
+  [...answerButtons.children].forEach(btn => {
+    btn.classList.add(btn.dataset.correct === "true" ? "correct" : "wrong");
     btn.style.pointerEvents = "none";
   });
 
   nextButton.style.display = "block";
 }
 
-nextButton.addEventListener("click", () => {
-  currentQuestionIndex++;
-  if (currentQuestionIndex < shuffledQuestions.length) {
-    showQuestion();
-  } else {
-    showResult();
-  }
-});
+nextButton.onclick = () => {
+  currentIndex++;
+  currentIndex < shuffledQuestions.length ? showQuestion() : showResult();
+};
 
 function showResult() {
   resetState();
-
-  let message = score === 0
-    ? `<p>Thank you for participating in the quiz!</p>
-       <p style="color:#ffcccc;">You failed the quiz.</p>`
-    : `<p>Thank you for participating in the quiz!</p>`;
-
   questionContainer.innerHTML = `
-    ${message}
+    <p>Thank you for participating in the quiz!</p>
     <p>Your final score is <strong>${score} / ${shuffledQuestions.length}</strong></p>
+    ${score === 0 ? "<p style='color:#ffcccc;'>You failed the quiz.</p>" : ""}
   `;
 
   const endBtn = document.createElement("button");
   endBtn.id = "end-btn";
   endBtn.style.display = "block";
-  endBtn.innerText = "End Quiz";
-
+  endBtn.textContent = "End Quiz";
   endBtn.onclick = () => {
-    if (confirm("Do you want to try again?")) {
-      location.reload();
-    }
+    if (confirm("Do you want to try again?")) location.reload();
   };
-
   result.appendChild(endBtn);
 }
 </script>
