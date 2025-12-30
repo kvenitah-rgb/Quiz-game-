@@ -212,6 +212,46 @@ function showResult(message) {
 function showFinalResult() {
   showResult("Quiz Completed!");
 }
+function selectAnswer(selected, correctAnswer) {
+  const options = answerButtons.children;
+  Array.from(options).forEach(option => {
+    option.classList.remove('correct', 'wrong');
+    if (option.textContent === correctAnswer) {
+[12/29, 6:08 AM] Chatgpt: option.classList.add('correct');
+    } else {
+      option.classList.add('wrong');
+    }
+    option.style.pointerEvents = 'none';
+  });
+
+  if (selected.textContent === correctAnswer) {
+    score++;
+  }
+
+  clearInterval(timer);
+  nextButton.style.display = 'inline';
+}
+
+nextButton.addEventListener('click', () => {
+  currentQuestionIndex++;
+  if (currentQuestionIndex < shuffledQuestions.length) {
+    startTimer();
+    showQuestion();
+  } else {
+    showFinalResult();
+  }
+});
+
+function showResult(message) {
+  questionContainer.textContent = '';
+  answerButtons.innerHTML = '';
+  nextButton.style.display = 'none';
+  resultDisplay.textContent = message + ` Your Score: score/{questions.length}`;
+}
+
+function showFinalResult() {
+  showResult("Quiz Completed!");
+}
 
 startQuiz();
   </script>
