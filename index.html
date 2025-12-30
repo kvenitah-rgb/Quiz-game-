@@ -111,7 +111,6 @@ const questions = [
       { text: "Madrid", correct: false }
     ]
   },
- 
   {
     question: "Which language runs in a web browser?",
     answers: [
@@ -193,23 +192,10 @@ nextButton.addEventListener("click", () => {
 
 function showResult() {
   resetState();
-
-  let message = "";
-
-  if (score === 0) {
-    message = `
-      <p>Thank you for participating in the quiz!</p>
-      <p style="color:#ffcccc;">You failed the quiz.</p>
-      <p>Your final score is <strong>${score} / ${questions.length}</strong></p>
-    `;
-  } else {
-    message = `
-      <p>Thank you for participating in the quiz!</p>
-      <p>Your final score is <strong>${score} / ${questions.length}</strong></p>
-    `;
-  }
-
-  questionContainer.innerHTML = message;
+  questionContainer.innerHTML = `
+    Thank you for participating in the quiz!<br><br>
+    Your final score is <strong>${score} / ${questions.length}</strong>
+  `;
 
   const endBtn = document.createElement("button");
   endBtn.id = "end-btn";
